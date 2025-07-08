@@ -1,41 +1,28 @@
-import 'dart:developer';
-
+import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/screens/onboardingScreen/onBoardingVeiw.dart';
+import 'package:drips_water/screens/splashScreen/splashView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    initialization();
-  }
-
-  void initialization() async{
-    log("ready 2");
-    await Future.delayed(Duration(seconds: 1));
-    log("ready 1");
-    await Future.delayed(Duration(seconds: 1));
-    log("GO!");
-    FlutterNativeSplash.remove();
-  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text("Hello World"))));
+      theme: ThemeData(
+        textTheme: TextTheme(
+          displayLarge: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.blktxtCcolor,
+            fontSize: 27,
+          ),
+        ),
+      ),
+      home: Splashview(),
+    );
   }
 }
