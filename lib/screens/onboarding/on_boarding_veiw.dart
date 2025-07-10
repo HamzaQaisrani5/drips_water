@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/assetImages/image_address.dart';
+import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/resources/components/button.dart';
-import 'package:drips_water/resources/components/customTxtBtn.dart';
+import 'package:drips_water/resources/components/cstm_txt_btn.dart';
 import 'package:drips_water/resources/components/widget.dart';
-import 'package:drips_water/screens/welcomeScreen/welcomeView.dart';
+import 'package:drips_water/screens/welcome/welcome.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,11 +25,23 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+    // Calling before rendring
+    initialization();
     controller.addListener(() {
       setState(() {
         currentPage = controller.page?.round() ?? 0;
       });
     });
+  }
+  // Two second delay of keep Splash on Display
+  void initialization() async {
+    log('2');
+    await Future.delayed(Duration(seconds: 1));
+    log('1');
+    await Future.delayed(Duration(seconds: 1));
+    log('Go!');
+    // Remove Splash after 2 sec
+    FlutterNativeSplash.remove();
   }
 
   @override
@@ -63,17 +78,17 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
             },
             children: [
               buildPage(
-                imagePath: AssetImageAddress.firstImage,
+                imagePath: Addresses.firstImage,
                 title: "We provide best quality water",
               ),
               buildPage(
-                imagePath: AssetImageAddress.secondImage,
+                imagePath: Addresses.secondImage,
                 title: "Schedule when you want your water deliver",
               ),
               buildPage(
-                imagePath: AssetImageAddress.thirdImage,
+                imagePath: Addresses.thirdImage,
                 title: "Fast and responsibily delivery",
-                fontsize: 30
+                fontsize: 30,
               ),
             ],
           ),
