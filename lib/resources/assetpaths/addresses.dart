@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Addresses {
   // Onboarding screens images
   static String firstImage = "asset/onboarding_screen/first_image.png";
@@ -8,4 +10,8 @@ class Addresses {
   static String tint = "asset/welcome_screen/tint.png";
   // App fontFamily
   static String appFontFamily = "OpenSans";
+  // checkpoint images
+  static String glassWater = 'asset/checkpoint_screen/waterglass.jpg';
+  // static String bowlWater = 'asset/checkpoint_screen/waterglass.jpg';
+  
 }

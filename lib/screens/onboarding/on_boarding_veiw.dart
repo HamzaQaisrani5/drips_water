@@ -1,10 +1,10 @@
 import 'dart:developer';
-
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/resources/components/button.dart';
 import 'package:drips_water/resources/components/cstm_txt_btn.dart';
 import 'package:drips_water/resources/components/widget.dart';
+import 'package:drips_water/screens/checkpoint/check_point.dart';
 import 'package:drips_water/screens/welcome/welcome.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +21,9 @@ class OnboardingScreen extends StatefulWidget {
 class _FirstOnboardingScreenState extends State<OnboardingScreen> {
   final controller = PageController();
   int currentPage = 0;
-
   @override
   void initState() {
     super.initState();
-    // Calling before rendring
     initialization();
     controller.addListener(() {
       setState(() {
@@ -114,7 +112,7 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
                 if (currentPage == 2) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    MaterialPageRoute(builder: (context) => CheckPoint()),
                   );
                 } else {
                   controller.nextPage(

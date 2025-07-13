@@ -67,7 +67,7 @@ flutter:
   assets:
     - asset/onboarding_screen/
     - asset/welcome_screen/
-
+    - asset/checkpoint_screen/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
