@@ -97,6 +97,7 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
               controller: controller,
               count: 3,
               effect: WormEffect(
+                
                 activeDotColor: AppColors.bgColor,
                 dotColor: AppColors.lightgrey,
                 dotWidth: 30,
