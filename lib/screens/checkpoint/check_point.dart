@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/screens/welcome/welcome.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +14,7 @@ class _CheckPointState extends State<CheckPoint> {
   void initState() {
     super.initState();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     final sizeHeight = MediaQuery.of(context).size.height;
@@ -28,11 +25,11 @@ class _CheckPointState extends State<CheckPoint> {
           Positioned(
             height: sizeHeight,
             width: sizeWidth,
-            child:Image.asset(
+            child: Image.asset(
               Addresses.glassWater,
-                fit: BoxFit.cover,
-                gaplessPlayback: true
-            )
+              fit: BoxFit.cover,
+              gaplessPlayback: true,
+            ),
           ),
           Center(
             child: Column(

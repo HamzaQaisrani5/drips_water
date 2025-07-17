@@ -1,5 +1,6 @@
 import 'package:drips_water/main.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -108,8 +109,8 @@ class _LoginState extends State<Login> {
                   return null;
                 },
               ),
-              SizedBox(height: 10,),
-              
+              SizedBox(height: 10),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -125,37 +126,43 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-              SizedBox(height: 100,),
+              SizedBox(height: 100),
               TextButton(
-                onPressed: (){}, 
+                onPressed: () {},
                 child: Text(
-                'LOGIN',
-                style: Theme.of(context).textTheme.labelLarge
-              )),
-              SizedBox(height: 20,),
+                  'LOGIN',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Don't have an account?",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      decoration: TextDecoration.underline
+                      decoration: TextDecoration.underline,
                     ),
-                    
                   ),
                   InkWell(
-                    onTap: (){},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpView()),
+                      );
+                    },
                     child: Text(
                       'Sign up',
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: AppColors.bgColor,
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.underline,
-                        decorationColor: AppColors.bgColor
+                        decorationColor: AppColors.bgColor,
                       ),
-                    ))
+                    ),
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/screens/checkpoint/check_point.dart';
-import 'package:drips_water/screens/login/login.dart';
 import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 // import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 // import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
@@ -13,7 +9,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
   // Preserving Splash
-  FlutterNativeSplash.preserve(widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
+  FlutterNativeSplash.preserve(
+    widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
+  );
   runApp(const MyApp());
 }
 
@@ -25,6 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          foregroundColor: Colors.blue,
+          backgroundColor: Colors.white,
+        ),
         textTheme: TextTheme(
           displayLarge: TextStyle(
             fontFamily: "OpenSans",

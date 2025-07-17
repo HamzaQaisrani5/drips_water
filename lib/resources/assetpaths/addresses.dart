@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Addresses {
   // Onboarding screens images
   static String firstImage = "asset/onboarding_screen/first_image.png";
@@ -13,5 +11,4 @@ class Addresses {
   // checkpoint images
   static String glassWater = 'asset/checkpoint_screen/waterglass.jpg';
   // static String bowlWater = 'asset/checkpoint_screen/waterglass.jpg';
-  
 }

@@ -2,6 +2,7 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/screens/login/login.dart';
+import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -32,12 +33,17 @@ class WelcomeScreen extends StatelessWidget {
                   "Water Delivery App",
 
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.whitetxtColor
+                    color: AppColors.whitetxtColor,
                   ),
                 ),
                 SizedBox(height: 30),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpView()),
+                    );
+                  },
                   style: Theme.of(context).textButtonTheme.style!.copyWith(
                     backgroundColor: WidgetStatePropertyAll(
                       AppColors.whitetxtColor,

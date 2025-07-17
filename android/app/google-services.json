@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266331724120",
+    "project_id": "team-project-6af55",
+    "storage_bucket": "team-project-6af55.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266331724120:android:44f7560909b40c5f34ed2d",
+        "android_client_info": {
+          "package_name": "com.example.drips_water"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAOc2hq_6L3wKeQ2uKnfuCpwIadn7XfEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
