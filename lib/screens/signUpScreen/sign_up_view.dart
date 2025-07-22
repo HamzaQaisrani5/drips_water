@@ -1,5 +1,11 @@
+import 'dart:developer';
+import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
+import 'package:drips_water/resources/components/validationmodel/validations.dart';
+import 'package:drips_water/screens/dashboard/dashboard.dart';
 import 'package:drips_water/screens/login/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpView extends StatefulWidget {
@@ -20,9 +26,8 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(backgroundColor: Colors.transparent),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -58,22 +63,17 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        hintStyle: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
-                        hintText: 'Production Experience',
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                          borderSide: BorderSide(color: AppColors.bgColor),
-                        ),
-                      ),
-                      cursorColor: AppColors.bgColor,
-                      controller: emailController,
+                    // Name
+                    CustomFormField(
+                      controller: nameController,
+                      hintText: 'Name',
+                      validator: (value) {
+                        if (nameController.text.isEmpty ||
+                            nameController.text.length < 5) {
+                          return 'Name cannot be Empty or less then 5 chars';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -84,38 +84,16 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "productionexperience@gmail.com",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        hintStyle: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                          borderSide: BorderSide(color: AppColors.bgColor),
-                        ),
-                      ),
-                      cursorColor: AppColors.bgColor,
+                    // Email
+                    CustomFormField(
+                      controller: emailController,
+                      hintText: 'productionexperience@gmail.com',
                       validator: (value) {
-                        final emailValidation = RegExp(
-                          r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
-                          r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
-                          r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
-                          r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
-                          r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
-                          r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-                          r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])',
-                        );
-                        value!.isEmpty && !emailValidation.hasMatch(value)
-                            ? "Invalid Format"
-                            : null;
+                        if (!value!.isValidEmail) {
+                          return 'Invalid Email';
+                        }
                         return null;
                       },
-                      controller: emailController,
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -126,27 +104,16 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        hintStyle: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
-                        hintText: '**************',
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                          borderSide: BorderSide(color: AppColors.bgColor),
-                        ),
-                      ),
-                      cursorColor: AppColors.bgColor,
-
+                    // password
+                    CustomFormField(
+                      controller: paswordController,
+                      hintText: '*******',
                       validator: (value) {
-                        value!.isEmpty ? "Invalid Format" : null;
+                        if (!value!.isValidPassword) {
+                          return "Contain 8 chars\nupperCase/lowerCase Letters\ndigits\nspecial characters";
+                        }
                         return null;
                       },
-                      controller: paswordController,
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -157,31 +124,36 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "***************",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        hintStyle: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1),
-                          borderSide: BorderSide(color: AppColors.bgColor),
-                        ),
-                      ),
+                    // confirm password
+                    CustomFormField(
                       controller: confirmPasswordController,
-                      cursorColor: AppColors.bgColor,
-                      validator: (value) {
+                      hintText: '*******',
+                      // obscureText: true,
+                      validator: (_) {
+                        if (confirmPasswordController.text.isEmpty ||
+                            confirmPasswordController.text !=
+                                paswordController.text) {
+                          return 'Cannot match to yourpassword or Empty';
+                        }
                         return null;
                       },
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 55),
                     Center(
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {}
+                          if (paswordController.text.isValidPassword &&
+                              nameController.text.isNotEmpty &&
+                              nameController.text.length >= 5 &&
+                              emailController.text.isValidEmail) {
+                            Auth.signUp(
+                              context: context,
+                              email: emailController.text,
+                              password: paswordController.text,
+                            );
+                          }
+                        },
                         child: Text(
                           'CREATE AN ACCOUNT',
                           style: Theme.of(context).textTheme.labelLarge,
@@ -203,13 +175,13 @@ class _SignUpViewState extends State<SignUpView> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                     child: Text(
-                      'Sign up',
+                      'Sign in',
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: AppColors.bgColor,
                         fontWeight: FontWeight.bold,

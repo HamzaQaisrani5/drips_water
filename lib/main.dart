@@ -1,32 +1,42 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
+import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/screens/login/login.dart';
 import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
+import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
+// import 'package:drips_water/screens/login/login.dart';
 // import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
-// import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
-// import 'package:drips_water/screens/welcome/welcome.dart';
+// import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
-  // Preserving Splash
-  FlutterNativeSplash.preserve(
-    widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(AssetImage(Addresses.bowlWater), context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          foregroundColor: Colors.blue,
-          backgroundColor: Colors.white,
-        ),
+        appBarTheme: AppBarTheme(),
         textTheme: TextTheme(
           displayLarge: TextStyle(
             fontFamily: "OpenSans",
@@ -95,8 +105,26 @@ class MyApp extends StatelessWidget {
             minimumSize: Size((318 / 2), 70),
           ),
         ),
+        tooltipTheme: TooltipThemeData(
+          textStyle: TextStyle(
+            fontSize: 13,
+            fontFamily: Addresses.appFontFamily,
+            color: Colors.white,
+          ),
+        ),
       ),
       home: OnboardingScreen(),
     );
   }
 }
+// Registered emails
+//1) email: alinajoli65@gmail.com
+//pswrd: Alina@789
+// 2) email: waterfall@gmail.com
+// pswrd: Waterfall@1
+// 3) email:abc@gmail.com
+// pswrd: hamza
+// 4) email: game@gmail.com
+// pserd: Game!123
+// 5) email: qaisranitrader789@gmail.com
+// pswrd:Qaisrani78@

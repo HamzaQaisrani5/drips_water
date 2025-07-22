@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/resources/components/button.dart';
-import 'package:drips_water/resources/components/cstm_txt_btn.dart';
-import 'package:drips_water/resources/components/widget.dart';
+import 'package:drips_water/resources/components/cstmwidgets/button.dart';
+import 'package:drips_water/resources/components/cstmwidgets/cstm_txt_btn.dart';
+import 'package:drips_water/resources/components/cstmwidgets/widget.dart';
 import 'package:drips_water/screens/checkpoint/check_point.dart';
 import 'package:drips_water/screens/welcome/welcome.dart';
 import 'package:flutter/foundation.dart';
@@ -24,22 +24,11 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    initialization();
     controller.addListener(() {
       setState(() {
         currentPage = controller.page?.round() ?? 0;
       });
     });
-  }
-  // Two second delay of keep Splash on Display
-  void initialization() async {
-    log('2');
-    await Future.delayed(Duration(seconds: 1));
-    log('1');
-    await Future.delayed(Duration(seconds: 1));
-    log('Go!');
-    // Remove Splash after 2 sec
-    FlutterNativeSplash.remove();
   }
 
   @override
@@ -97,7 +86,6 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
               controller: controller,
               count: 3,
               effect: WormEffect(
-                
                 activeDotColor: AppColors.bgColor,
                 dotColor: AppColors.lightgrey,
                 dotWidth: 30,

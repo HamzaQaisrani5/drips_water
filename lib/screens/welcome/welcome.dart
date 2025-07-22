@@ -1,4 +1,3 @@
-// import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/screens/login/login.dart';
@@ -31,7 +30,6 @@ class WelcomeScreen extends StatelessWidget {
                 SizedBox(height: 8),
                 Text(
                   "Water Delivery App",
-
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: AppColors.whitetxtColor,
                   ),
@@ -75,6 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                       BorderSide(color: AppColors.whitetxtColor, width: 1),
                     ),
                     backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+                    overlayColor: WidgetStatePropertyAll(Colors.transparent),
                   ),
                   child: Text(
                     "LOG IN",

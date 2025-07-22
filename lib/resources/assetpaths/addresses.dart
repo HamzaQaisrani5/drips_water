@@ -9,6 +9,5 @@ class Addresses {
   // App fontFamily
   static String appFontFamily = "OpenSans";
   // checkpoint images
-  static String glassWater = 'asset/checkpoint_screen/waterglass.jpg';
-  // static String bowlWater = 'asset/checkpoint_screen/waterglass.jpg';
+  static String bowlWater = 'asset/checkpoint_screen/bowlwater.jpg';  
 }

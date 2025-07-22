@@ -26,7 +26,7 @@ class _CheckPointState extends State<CheckPoint> {
             height: sizeHeight,
             width: sizeWidth,
             child: Image.asset(
-              Addresses.glassWater,
+              Addresses.bowlWater,
               fit: BoxFit.cover,
               gaplessPlayback: true,
             ),
