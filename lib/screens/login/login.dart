@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';

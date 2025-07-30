@@ -3,11 +3,12 @@ class Addresses {
   static String firstImage = "asset/onboarding_screen/first_image.png";
   static String secondImage = "asset/onboarding_screen/second_image.png";
   static String thirdImage = "asset/onboarding_screen/third_image.png";
+  static String arrowIcon = "asset/onboarding_screen/arrow.png";
   // Welcome screen images
   static String person = "asset/welcome_screen/person.png";
   static String tint = "asset/welcome_screen/tint.png";
   // App fontFamily
   static String appFontFamily = "OpenSans";
   // checkpoint images
-  static String bowlWater = 'asset/checkpoint_screen/bowlwater.jpg';  
+  static String bowlWater = 'asset/checkpoint_screen/bowlwater.jpg';
 }

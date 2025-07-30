@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:drips_water/screens/checkpoint/check_point.dart';
 import 'package:drips_water/screens/dashboard/dashboard.dart';
-import 'package:drips_water/screens/welcome/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

@@ -1,15 +1,8 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/screens/dashboard/dashboard.dart';
-import 'package:drips_water/screens/login/login.dart';
-import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
-import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
-// import 'package:drips_water/screens/login/login.dart';
-// import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
-// import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -113,7 +106,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: OnboardingScreen(),
+      home: Dashboard(),
     );
   }
 }

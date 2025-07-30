@@ -1,10 +1,22 @@
 import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
 import 'package:drips_water/resources/components/dashboardmodel/dashboard_model.dart';
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController perdayGallonController = TextEditingController();
+  TextEditingController customerIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +43,81 @@ class Dashboard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder:
+                    (BuildContext context) => AlertDialog(
+                      scrollable: true,
+                      backgroundColor: Colors.white,
+                      title: Text(
+                        "Add Customer Information",
+                        textAlign: TextAlign.center,
+                      ),
+                      content: ListBody(
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                          CustomFormField(
+                            hintText: "Name",
+                            validator: (value) {
+                              return null;
+                            },
+                            controller: nameController,
+                          ),
+                          SizedBox(height: 20),
+                          CustomFormField(
+                            hintText: "Delivery Address",
+                            validator: null,
+                            controller: addressController,
+                          ),
+                          SizedBox(height: 20),
+                          CustomFormField(
+                            hintText: "Phone number",
+                            validator: null,
+                            controller: phoneController,
+                          ),
+                          SizedBox(height: 20),
+                          CustomFormField(
+                            hintText: "Per day Gallon",
+                            validator: null,
+                            controller: perdayGallonController,
+                          ),
+                          SizedBox(height: 20),
+                          CustomFormField(
+                            hintText: "Customer Id",
+                            validator: null,
+                            controller: customerIdController,
+                          ),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Colors.white,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Center(child: Text("Add")),
+                        ),
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Colors.white,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Center(child: Text("cancel")),
+                        ),
+                      ],
+                    ),
+              );
+            },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
               shape: RoundedRectangleBorder(
