@@ -130,7 +130,7 @@ class _SignUpViewState extends State<SignUpView> {
                         if (confirmPasswordController.text.isEmpty ||
                             confirmPasswordController.text !=
                                 paswordController.text) {
-                          return 'Cannot match to yourpassword or Empty';
+                          return 'Cannot match to your password or Empty';
                         }
                         return null;
                       },

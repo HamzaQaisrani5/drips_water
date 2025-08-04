@@ -1,3 +1,4 @@
+import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
 import 'package:drips_water/resources/components/cstmwidgets/button.dart';
@@ -17,9 +18,11 @@ class OnboardingScreen extends StatefulWidget {
 class _FirstOnboardingScreenState extends State<OnboardingScreen> {
   final controller = PageController();
   int currentPage = 0;
+  Auth auth = Auth();
   @override
   void initState() {
     super.initState();
+    auth.checkUser(context);
     controller.addListener(() {
       setState(() {
         currentPage = controller.page?.round() ?? 0;

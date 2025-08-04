@@ -1,10 +1,34 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:drips_water/screens/checkpoint/check_point.dart';
 import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth {
+  // Check if user is already log in then open the dashboard screen other onboarding screen.
+  void checkUser(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+    if (!context.mounted) {
+      return;
+    }
+    if (user != null) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (context) => Dashboard()));
+      });
+    } else {
+      Timer(Duration(seconds: 3), () {
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (context) => OnboardingScreen()));
+      });
+    }
+  }
+
   // signUp/Register method
   static Future<void> signUp({
     required BuildContext context,

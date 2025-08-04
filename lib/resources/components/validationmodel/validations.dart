@@ -1,4 +1,3 @@
-
 extension Validations on String {
   bool get isValidEmail {
     final validEmail = RegExp(
@@ -19,6 +18,11 @@ extension Validations on String {
     );
     // - Ensures the total length is at least 8 characters, composed only of letters, digits, and the specified special characters,
     return validPassword.hasMatch(this);
+  }
 
+  static bool isPhoneNumberValid(String phoneNumber) {
+    return RegExp(
+      r'^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$',
+    ).hasMatch(phoneNumber);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: Dashboard(),
+      home: OnboardingScreen(),
     );
   }
 }

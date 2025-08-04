@@ -2,6 +2,7 @@ import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
 import 'package:drips_water/resources/components/dashboardmodel/dashboard_model.dart';
+import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -17,11 +18,31 @@ class _DashboardState extends State<Dashboard> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController perdayGallonController = TextEditingController();
   TextEditingController customerIdController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    addressController.dispose();
+    phoneController.dispose();
+    perdayGallonController.dispose();
+    customerIdController.dispose();
+  }
+
+  void clearController() {
+    nameController.clear();
+    addressController.clear();
+    phoneController.clear();
+    perdayGallonController.clear();
+    customerIdController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actionsPadding: EdgeInsets.only(right: 5),
         actions: [
           IconButton(
@@ -55,41 +76,82 @@ class _DashboardState extends State<Dashboard> {
                         "Add Customer Information",
                         textAlign: TextAlign.center,
                       ),
-                      content: ListBody(
-                        children: <Widget>[
-                          SizedBox(height: 10),
-                          CustomFormField(
-                            hintText: "Name",
-                            validator: (value) {
-                              return null;
-                            },
-                            controller: nameController,
-                          ),
-                          SizedBox(height: 20),
-                          CustomFormField(
-                            hintText: "Delivery Address",
-                            validator: null,
-                            controller: addressController,
-                          ),
-                          SizedBox(height: 20),
-                          CustomFormField(
-                            hintText: "Phone number",
-                            validator: null,
-                            controller: phoneController,
-                          ),
-                          SizedBox(height: 20),
-                          CustomFormField(
-                            hintText: "Per day Gallon",
-                            validator: null,
-                            controller: perdayGallonController,
-                          ),
-                          SizedBox(height: 20),
-                          CustomFormField(
-                            hintText: "Customer Id",
-                            validator: null,
-                            controller: customerIdController,
-                          ),
-                        ],
+                      content: Form(
+                        key: _formKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 10),
+                            CustomFormField(
+                              emojidisable: true,
+                              hintText: "Name",
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your name.";
+                                } else if (value.length < 5) {
+                                  return "Name must containes at lease 5 characters.";
+                                }
+                                return null;
+                              },
+                              controller: nameController,
+                            ),
+                            SizedBox(height: 20),
+                            CustomFormField(
+                              emojidisable: true,
+                              hintText: "Delivery Address",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "This field cannot be empty.";
+                                }
+                                return null;
+                              },
+                              controller: addressController,
+                            ),
+                            SizedBox(height: 20),
+                            CustomFormField(
+                              emojidisable: true,
+                              hintText: "Phone number",
+                              validator: (value) {
+                                final validatePhoneNumber =
+                                    Validations.isPhoneNumberValid(
+                                      value.toString(),
+                                    );
+                                if (validatePhoneNumber) {
+                                  return null;
+                                } else if (value!.length < 12) {
+                                  return "Length must be equal to 11.";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: phoneController,
+                            ),
+                            SizedBox(height: 20),
+                            CustomFormField(
+                              emojidisable: true,
+                              hintText: "Per day Gallon",
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "This field cannot be emtpy.";
+                                }
+                                return null;
+                              },
+                              controller: perdayGallonController,
+                            ),
+                            SizedBox(height: 20),
+                            CustomFormField(
+                              emojidisable: true,
+                              hintText: "Customer Id",
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter customer id";
+                                }
+                                return null;
+                              },
+                              controller: customerIdController,
+                            ),
+                          ],
+                        ),
                       ),
                       actions: <Widget>[
                         TextButton(
@@ -99,7 +161,14 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pop(context);
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                DashboardModel.numberOfCustomers =
+                                    DashboardModel.numberOfCustomers + 1;
+                              });
+                              clearController();
+                              Navigator.pop(context);
+                            }
                           },
                           child: Center(child: Text("Add")),
                         ),
