@@ -1,6 +1,6 @@
 import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
+import 'package:drips_water/resources/components/cstmwidgets/custom_formfield.dart';
 import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:drips_water/screens/login/login.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +107,7 @@ class _SignUpViewState extends State<SignUpView> {
                       hintText: '*******',
                       validator: (value) {
                         if (!value!.isValidPassword) {
-                          return "Contain 8 chars\nupperCase/lowerCase Letters\ndigits\nspecial characters";
+                          return "Contain 8 chars\nupperCase/lowerCase Letters\nDigits\nspecial characters";
                         }
                         return null;
                       },
@@ -139,15 +139,11 @@ class _SignUpViewState extends State<SignUpView> {
                     Center(
                       child: TextButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
-                          if (paswordController.text.isValidPassword &&
-                              nameController.text.isNotEmpty &&
-                              nameController.text.length >= 5 &&
-                              emailController.text.isValidEmail) {
+                          if (_formKey.currentState!.validate()) {
                             Auth.signUp(
                               context: context,
-                              email: emailController.text,
-                              password: paswordController.text,
+                              email: emailController.text.trim(),
+                              password: paswordController.text.trim(),
                             );
                           }
                         },

@@ -37,6 +37,7 @@ class Auth {
   }) async {
     log('creating user on firebase');
     try {
+      log(email.toString());
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,

@@ -1,6 +1,10 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
+import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/screens/login/login.dart';
+import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
+import 'package:drips_water/screens/viewcustomer/view_customer.dart';
+// import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: AppBarTheme(),
         textTheme: TextTheme(
           displayLarge: TextStyle(
-            fontFamily: "OpenSans",
+            fontFamily: Addresses.appFontFamily,
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),
@@ -40,7 +44,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: Addresses.appFontFamily,
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.bgColor,
           ),
           titleMedium: TextStyle(
             fontFamily: Addresses.appFontFamily,
@@ -56,7 +60,7 @@ class _MyAppState extends State<MyApp> {
           bodyMedium: TextStyle(
             fontSize: 14,
             fontFamily: Addresses.appFontFamily,
-            // color: Colors
+            color: Colors.black45
           ),
           bodySmall: TextStyle(
             fontSize: 13,
@@ -106,7 +110,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: OnboardingScreen(),
+      home: SignUpView(),
     );
   }
 }
@@ -121,3 +125,5 @@ class _MyAppState extends State<MyApp> {
 // pserd: Game!123
 // 5) email: qaisranitrader789@gmail.com
 // pswrd:Qaisrani78@
+// 6) haamim@gmail.com
+// pswrd: Haamim1@    ya Haamim@1

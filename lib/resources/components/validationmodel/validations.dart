@@ -20,9 +20,16 @@ extension Validations on String {
     return validPassword.hasMatch(this);
   }
 
-  static bool isPhoneNumberValid(String phoneNumber) {
-    return RegExp(
+  bool get isValidPhoneNumber {
+    final RegExp validPhoneNumber = RegExp(
       r'^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$',
-    ).hasMatch(phoneNumber);
+    );
+    return validPhoneNumber.hasMatch(this);
   }
+
+  // static bool isPhoneNumberValid(String phoneNumber) {
+  //   return RegExp(
+  //     r'^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$',
+  //   ).hasMatch(phoneNumber);
+  // }
 }

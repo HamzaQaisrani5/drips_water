@@ -22,7 +22,7 @@ class _FirstOnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    auth.checkUser(context);
+    // auth.checkUser(context);
     controller.addListener(() {
       setState(() {
         currentPage = controller.page?.round() ?? 0;

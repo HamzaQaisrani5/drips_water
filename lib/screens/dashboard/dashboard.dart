@@ -1,9 +1,12 @@
+// import 'dart:developer';
 import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
-import 'package:drips_water/resources/components/dashboardmodel/dashboard_model.dart';
-import 'package:drips_water/resources/components/validationmodel/validations.dart';
+// import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
+import 'package:drips_water/resources/components/cstmwidgets/dashboard_model.dart';
+// import 'package:drips_water/resources/components/validationmodel/validations.dart';
+import 'package:drips_water/screens/viewcustomer/view_customer.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -13,30 +16,12 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController perdayGallonController = TextEditingController();
-  TextEditingController customerIdController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    super.dispose();
-    nameController.dispose();
-    addressController.dispose();
-    phoneController.dispose();
-    perdayGallonController.dispose();
-    customerIdController.dispose();
-  }
-
-  void clearController() {
-    nameController.clear();
-    addressController.clear();
-    phoneController.clear();
-    perdayGallonController.clear();
-    customerIdController.clear();
-  }
+  // @override
+  // void dispose() {
+  //   DashboardModel.disposingControllers();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +40,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
         title: Text('DASHBOARD'),
-        titleTextStyle: Theme.of(
-          context,
-        ).textTheme.titleMedium!.copyWith(color: AppColors.bgColor),
+        titleTextStyle: Theme.of(context).textTheme.titleMedium,
         shadowColor: Colors.black12,
       ),
       floatingActionButton: Column(
@@ -65,127 +48,22 @@ class _DashboardState extends State<Dashboard> {
         children: [
           TextButton(
             onPressed: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder:
-                    (BuildContext context) => AlertDialog(
-                      scrollable: true,
-                      backgroundColor: Colors.white,
-                      title: Text(
-                        "Add Customer Information",
-                        textAlign: TextAlign.center,
-                      ),
-                      content: Form(
-                        key: _formKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(height: 10),
-                            CustomFormField(
-                              emojidisable: true,
-                              hintText: "Name",
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please enter your name.";
-                                } else if (value.length < 5) {
-                                  return "Name must containes at lease 5 characters.";
-                                }
-                                return null;
-                              },
-                              controller: nameController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomFormField(
-                              emojidisable: true,
-                              hintText: "Delivery Address",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "This field cannot be empty.";
-                                }
-                                return null;
-                              },
-                              controller: addressController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomFormField(
-                              emojidisable: true,
-                              hintText: "Phone number",
-                              validator: (value) {
-                                final validatePhoneNumber =
-                                    Validations.isPhoneNumberValid(
-                                      value.toString(),
-                                    );
-                                if (validatePhoneNumber) {
-                                  return null;
-                                } else if (value!.length < 12) {
-                                  return "Length must be equal to 11.";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              controller: phoneController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomFormField(
-                              emojidisable: true,
-                              hintText: "Per day Gallon",
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "This field cannot be emtpy.";
-                                }
-                                return null;
-                              },
-                              controller: perdayGallonController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomFormField(
-                              emojidisable: true,
-                              hintText: "Customer Id",
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Enter customer id";
-                                }
-                                return null;
-                              },
-                              controller: customerIdController,
-                            ),
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Colors.white,
-                            ),
-                          ),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                DashboardModel.numberOfCustomers =
-                                    DashboardModel.numberOfCustomers + 1;
-                              });
-                              clearController();
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Center(child: Text("Add")),
-                        ),
-                        TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Colors.white,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Center(child: Text("cancel")),
-                        ),
-                      ],
-                    ),
+              // DashboardModel.createCustomerId();
+              //             DashboardModel.addcustomerDialogue(
+              //               context,
+              //               formKey: _formKey,
+              // rebuildState: (){
+              //                 setState(() {});
+              //               }
+              //             );
+              DashboardModel.addcustomerDialogue(
+                context,
+                formKey: _formKey,
+                rebuildState: () {
+                  setState(() {});
+                },
               );
+              
             },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
@@ -203,7 +81,12 @@ class _DashboardState extends State<Dashboard> {
           ),
           SizedBox(height: 4.0),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ViewCustomer()),
+              );
+            },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
               shape: RoundedRectangleBorder(
@@ -232,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             SizedBox(height: 10),
             Text(
-              DashboardModel.numberOfCustomers.toString(),
+              DashboardModel.customer.length.toString(),
               style: Theme.of(context).textTheme.displayLarge!,
             ),
           ],
