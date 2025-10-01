@@ -1,6 +1,6 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/components/cstmwidgets/dashboard_model.dart';
-import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/ui/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class ViewCustomer extends StatelessWidget {

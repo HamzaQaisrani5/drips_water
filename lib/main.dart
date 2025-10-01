@@ -1,9 +1,9 @@
 import 'package:drips_water/resources/appColors/colors.dart';
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/screens/dashboard/dashboard.dart';
-import 'package:drips_water/screens/login/login.dart';
-import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
-import 'package:drips_water/screens/viewcustomer/view_customer.dart';
+import 'package:drips_water/ui/screens/dashboard.dart';
+import 'package:drips_water/ui/screens/login.dart';
+import 'package:drips_water/ui/screens/sign_up_view.dart';
+import 'package:drips_water/ui/screens/view_customer.dart';
 // import 'package:drips_water/screens/onboarding/on_boarding_veiw.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: SignUpView(),
+      home: Login(),
     );
   }
 }

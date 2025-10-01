@@ -1,9 +1,9 @@
 
 import 'package:drips_water/firebasestuff/auth.dart';
 import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/components/cstmwidgets/custom_formfield.dart';
+import 'package:drips_water/ui/widgets/custom_formfield.dart';
 import 'package:drips_water/resources/components/validationmodel/validations.dart';
-import 'package:drips_water/screens/signUpScreen/sign_up_view.dart';
+import 'package:drips_water/ui/screens/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {

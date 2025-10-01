@@ -1,5 +1,5 @@
 import 'package:drips_water/resources/assetpaths/addresses.dart';
-import 'package:drips_water/screens/welcome/welcome.dart';
+import 'package:drips_water/ui/screens/welcome.dart';
 import 'package:flutter/material.dart';
 
 class CheckPoint extends StatefulWidget {

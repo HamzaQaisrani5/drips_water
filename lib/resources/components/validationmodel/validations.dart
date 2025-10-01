@@ -16,7 +16,7 @@ extension Validations on String {
     final RegExp validPassword = RegExp(
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,}$',
     );
-    // - Ensures the total length is at least 8 characters, composed only of letters, digits, and the specified special characters,
+    // - Ensures the total length is at least 8 characters, composed only of Upper/Lower letters, digits, and the specified special characters,
     return validPassword.hasMatch(this);
   }
 

@@ -4,7 +4,7 @@ import 'package:drips_water/resources/appColors/colors.dart';
 // import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
 import 'package:drips_water/resources/components/cstmwidgets/dashboard_model.dart';
 // import 'package:drips_water/resources/components/validationmodel/validations.dart';
-import 'package:drips_water/screens/viewcustomer/view_customer.dart';
+import 'package:drips_water/ui/screens/view_customer.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
