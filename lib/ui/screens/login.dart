@@ -1,8 +1,8 @@
 
-import 'package:drips_water/firebasestuff/auth.dart';
-import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/logic/auth.dart';
+import 'package:drips_water/core/colors.dart';
 import 'package:drips_water/ui/widgets/custom_formfield.dart';
-import 'package:drips_water/resources/components/validationmodel/validations.dart';
+import 'package:drips_water/logic/validations.dart';
 import 'package:drips_water/ui/screens/sign_up_view.dart';
 import 'package:flutter/material.dart';
 

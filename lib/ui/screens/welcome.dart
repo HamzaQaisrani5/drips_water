@@ -1,5 +1,5 @@
-import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/assetpaths/addresses.dart';
+import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/core/asset_address.dart';
 import 'package:drips_water/ui/screens/login.dart';
 import 'package:drips_water/ui/screens/sign_up_view.dart';
 import 'package:flutter/material.dart';

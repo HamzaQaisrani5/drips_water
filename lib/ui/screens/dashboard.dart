@@ -1,10 +1,11 @@
 // import 'dart:developer';
-import 'package:drips_water/firebasestuff/auth.dart';
-import 'package:drips_water/resources/appColors/colors.dart';
+import 'package:drips_water/logic/auth.dart';
+import 'package:drips_water/logic/create_cstmr.dart';
+import 'package:drips_water/core/colors.dart';
 // import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
-import 'package:drips_water/resources/components/cstmwidgets/dashboard_model.dart';
 // import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:drips_water/ui/screens/view_customer.dart';
+import 'package:drips_water/ui/widgets/add_cstmr_dialog.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
@@ -56,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
               //                 setState(() {});
               //               }
               //             );
-              DashboardModel.addcustomerDialogue(
+              AddCustomerDialog.addcustomerDialogue(
                 context,
                 formKey: _formKey,
                 rebuildState: () {
@@ -115,7 +116,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             SizedBox(height: 10),
             Text(
-              DashboardModel.customer.length.toString(),
+              CreateCstmr.customer.length.toString(),
               style: Theme.of(context).textTheme.displayLarge!,
             ),
           ],

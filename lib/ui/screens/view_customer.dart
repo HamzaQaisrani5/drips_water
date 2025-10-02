@@ -1,6 +1,5 @@
-import 'package:drips_water/resources/appColors/colors.dart';
-import 'package:drips_water/resources/components/cstmwidgets/dashboard_model.dart';
-import 'package:drips_water/ui/screens/dashboard.dart';
+import 'package:drips_water/logic/create_cstmr.dart';
+import 'package:drips_water/core/colors.dart';
 import 'package:flutter/material.dart';
 
 class ViewCustomer extends StatelessWidget {
@@ -15,7 +14,7 @@ class ViewCustomer extends StatelessWidget {
         shadowColor: Colors.black12,
       ),
       body:
-          DashboardModel.customer.isEmpty
+          CreateCstmr.customer.isEmpty
               ? Column(
                 children: [
                   SizedBox(height: 10),

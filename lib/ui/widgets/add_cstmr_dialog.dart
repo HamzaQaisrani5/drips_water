@@ -1,70 +1,16 @@
 import 'dart:developer';
-// import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
-// import 'package:drips_water/screens/dashboard/dashboard.dart';
+import 'package:drips_water/logic/create_cstmr.dart';
+import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/ui/widgets/custom_formfield.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
 
-import '../../appColors/colors.dart';
-import '../../../ui/widgets/custom_formfield.dart';
-
-class DashboardModel {
-  static int numberOfCustomers = 0;
-  static TextEditingController name = TextEditingController();
-  static TextEditingController address = TextEditingController();
-  static TextEditingController phone = TextEditingController();
-  static TextEditingController perdayCane = TextEditingController();
-  static TextEditingController eachCanePrice = TextEditingController();
-  static List<Map> customer = [];
-  static TextEditingController customerId = TextEditingController();
-
-  static void createCustomerId() {
-    String signature = 'DW417';
-    if (customer.isEmpty) {
-      customerId.text = signature + (customer.length + 1).toString();
-    } else {
-      var split = customer.last['customerId'].toString().split('DW417');
-      customerId.text =
-          signature + (int.parse(split[split.length - 1]) + 1).toString();
-    }
-  }
-
-  static void addCustomer() {
-    customer.add({
-      'name': name.text.trim(),
-      'address': address.text.trim(),
-      'phone': phone.text.trim(),
-      'perdayCane': perdayCane.text.trim(),
-      'customerId': customerId.text,
-      'eachCanePrice': eachCanePrice.text.trim(),
-    });
-  }
-
-  // Clearing all controller for new customer
-  static void clearingControllers() {
-    name.clear();
-    address.clear();
-    phone.clear();
-    perdayCane.clear();
-    customerId.clear();
-    eachCanePrice.clear();
-  }
-
-  static void disposingControllers() {
-    name.dispose();
-    address.dispose();
-    phone.dispose();
-    perdayCane.dispose();
-    customerId.dispose();
-    eachCanePrice.dispose();
-  }
-
-  // Alert Dialogue of customer details
+class AddCustomerDialog {
   static Future<void> addcustomerDialogue(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
     required VoidCallback rebuildState,
   }) async {
-    createCustomerId();
+    CreateCstmr().createCustomerId();
     await showDialog(
       context: context,
       builder:
@@ -117,7 +63,7 @@ class DashboardModel {
                               }
                               return null;
                             },
-                            controller: DashboardModel.name,
+                            controller: CreateCstmr.name,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -139,7 +85,7 @@ class DashboardModel {
                               }
                               return null;
                             },
-                            controller: DashboardModel.address,
+                            controller: CreateCstmr.address,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -169,7 +115,7 @@ class DashboardModel {
                               }
                               return null;
                             },
-                            controller: DashboardModel.phone,
+                            controller: CreateCstmr.phone,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -192,7 +138,7 @@ class DashboardModel {
                               }
                               return null;
                             },
-                            controller: DashboardModel.perdayCane,
+                            controller: CreateCstmr.perdayCane,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -207,7 +153,7 @@ class DashboardModel {
                           SizedBox(height: 2),
                           // Customer Id
                           CustomFormField(
-                            controller: DashboardModel.customerId,
+                            controller: CreateCstmr.customerId,
                             readOnly: true,
                           ),
                           SizedBox(height: 20),
@@ -231,7 +177,7 @@ class DashboardModel {
                               }
                               return null;
                             },
-                            controller: DashboardModel.eachCanePrice,
+                            controller: CreateCstmr.eachCanePrice,
                           ),
                         ],
                       ),
@@ -249,9 +195,9 @@ class DashboardModel {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            clearingControllers();
+                            CreateCstmr().clearingControllers();
                             WidgetsBinding.instance.addPostFrameCallback((_) {
-                              disposingControllers();
+                              CreateCstmr().disposingControllers();
                               log('Controllers disposed successfully');
                             });
                           },
@@ -271,16 +217,16 @@ class DashboardModel {
                           ),
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              addCustomer();
-                              clearingControllers();
+                             CreateCstmr().addCustomer();
+                              CreateCstmr().clearingControllers();
                               Navigator.pop(context);
-                              print(DashboardModel.customer);
+                              print(CreateCstmr.customer);
                               log(
-                                'customers.lenght: ${DashboardModel.customer.length}',
+                                'customers.lenght: ${CreateCstmr.customer.length}',
                               );
                               rebuildState();
                               await Future.delayed(Duration(seconds: 1), () {
-                                disposingControllers();
+                                CreateCstmr().disposingControllers();
                                 log('Controllers disposed successfully');
                               });
                             }
