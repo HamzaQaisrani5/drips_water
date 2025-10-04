@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: Login(),
+      home: Dashboard(),
     );
   }
 }

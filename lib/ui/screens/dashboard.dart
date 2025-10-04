@@ -18,11 +18,11 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _formKey = GlobalKey<FormState>();
-  // @override
-  // void dispose() {
-  //   DashboardModel.disposingControllers();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    CreateCstmr().disposingControllers();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +49,6 @@ class _DashboardState extends State<Dashboard> {
         children: [
           TextButton(
             onPressed: () {
-              // DashboardModel.createCustomerId();
-              //             DashboardModel.addcustomerDialogue(
-              //               context,
-              //               formKey: _formKey,
-              // rebuildState: (){
-              //                 setState(() {});
-              //               }
-              //             );
               AddCustomerDialog.addcustomerDialogue(
                 context,
                 formKey: _formKey,

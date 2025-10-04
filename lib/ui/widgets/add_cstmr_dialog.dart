@@ -196,10 +196,6 @@ class AddCustomerDialog {
                           onPressed: () {
                             Navigator.pop(context);
                             CreateCstmr().clearingControllers();
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              CreateCstmr().disposingControllers();
-                              log('Controllers disposed successfully');
-                            });
                           },
                           child: Text(
                             'Cancel',
@@ -217,7 +213,7 @@ class AddCustomerDialog {
                           ),
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                             CreateCstmr().addCustomer();
+                              CreateCstmr().addCustomer();
                               CreateCstmr().clearingControllers();
                               Navigator.pop(context);
                               print(CreateCstmr.customer);
@@ -225,11 +221,7 @@ class AddCustomerDialog {
                                 'customers.lenght: ${CreateCstmr.customer.length}',
                               );
                               rebuildState();
-                              await Future.delayed(Duration(seconds: 1), () {
-                                CreateCstmr().disposingControllers();
-                                log('Controllers disposed successfully');
-                              });
-                            }
+                         }
                           },
                           child: Text(
                             'Save',

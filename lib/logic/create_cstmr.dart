@@ -38,7 +38,6 @@ class CreateCstmr {
     address.clear();
     phone.clear();
     perdayCane.clear();
-    customerId.clear();
     eachCanePrice.clear();
   }
 
