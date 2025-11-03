@@ -28,9 +28,14 @@ class ViewCustomer extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 separatorBuilder: (context, index) => SizedBox(height: 5,),
                 scrollDirection: Axis.vertical,
-                itemCount: 10,
+                itemCount: CreateCstmr.customer.length,
                 itemBuilder: (_, index) {
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: AppColors.whitetxtColor,
+                      child: Text('${index+1}'),
+                    ),
+                    title: Text(CreateCstmr.customer[index]['name']),
                     tileColor: AppColors.bgColor,
                   );
                 },
