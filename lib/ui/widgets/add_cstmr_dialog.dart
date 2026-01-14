@@ -3,14 +3,15 @@ import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:drips_water/core/colors.dart';
 import 'package:drips_water/ui/widgets/custom_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AddCustomerDialog {
+class AddCustomerDialog extends ChangeNotifier {
   static Future<void> addcustomerDialogue(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
     required VoidCallback rebuildState,
   }) async {
-    CreateCstmr().createCustomerId();
+    Provider.of<CreateCstmr>(context,listen: false).createCustomerId();
     await showDialog(
       context: context,
       builder:
@@ -211,7 +212,7 @@ class AddCustomerDialog {
                             overlayColor: Colors.black12,
                             backgroundColor: Colors.transparent,
                           ),
-                          onPressed: () async {
+                          onPressed: () {
                             if (formKey.currentState!.validate()) {
                               CreateCstmr().addCustomer();
                               CreateCstmr().clearingControllers();
