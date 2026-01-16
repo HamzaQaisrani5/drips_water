@@ -7,6 +7,7 @@ import 'package:drips_water/core/colors.dart';
 import 'package:drips_water/ui/screens/view_customer.dart';
 import 'package:drips_water/ui/widgets/add_cstmr_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter/services.dart';
 
 class Dashboard extends StatefulWidget {
@@ -52,11 +53,7 @@ class _DashboardState extends State<Dashboard> {
               AddCustomerDialog.addcustomerDialogue(
                 context,
                 formKey: _formKey,
-                rebuildState: () {
-                  setState(() {});
-                },
               );
-              
             },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
@@ -108,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             SizedBox(height: 10),
             Text(
-              CreateCstmr.customer.length.toString(),
+              '${context.watch<CreateCstmr>().customer.length}',
               style: Theme.of(context).textTheme.displayLarge!,
             ),
           ],

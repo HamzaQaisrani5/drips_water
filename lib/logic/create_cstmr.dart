@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CreateCstmr extends ChangeNotifier {
-  static int numberOfCustomers = 0;
+  // static int numberOfCustomers = 0;
   static TextEditingController name = TextEditingController();
   static TextEditingController address = TextEditingController();
   static TextEditingController phone = TextEditingController();
   static TextEditingController perdayCane = TextEditingController();
   static TextEditingController eachCanePrice = TextEditingController();
-  static List<Map> customer = [];
-  static TextEditingController _customerId = TextEditingController();
-
-  static TextEditingController get customerId => _customerId;
+  List<Map> customer = [];
+  TextEditingController customerId = TextEditingController();
 
   void createCustomerId() {
     String signature = 'DW417';
@@ -18,7 +16,7 @@ class CreateCstmr extends ChangeNotifier {
       customerId.text = signature + (customer.length + 1).toString();
     } else {
       var split = customer.last['customerId'].toString().split('DW417');
-      _customerId.text =
+      customerId.text =
           signature + (int.parse(split[split.length - 1]) + 1).toString();
     }
     notifyListeners();
@@ -33,6 +31,7 @@ class CreateCstmr extends ChangeNotifier {
       'customerId': customerId.text,
       'eachCanePrice': eachCanePrice.text.trim(),
     });
+    notifyListeners();
   }
 
   // Clearing all controller for new customer

@@ -9,9 +9,9 @@ class AddCustomerDialog extends ChangeNotifier {
   static Future<void> addcustomerDialogue(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
-    required VoidCallback rebuildState,
   }) async {
-    Provider.of<CreateCstmr>(context,listen: false).createCustomerId();
+    // listen CreateCstmr.createCustomerId()
+    context.read<CreateCstmr>().createCustomerId();
     await showDialog(
       context: context,
       builder:
@@ -154,7 +154,7 @@ class AddCustomerDialog extends ChangeNotifier {
                           SizedBox(height: 2),
                           // Customer Id
                           CustomFormField(
-                            controller: CreateCstmr.customerId,
+                            controller: context.watch<CreateCstmr>().customerId,
                             readOnly: true,
                           ),
                           SizedBox(height: 20),
@@ -214,15 +214,14 @@ class AddCustomerDialog extends ChangeNotifier {
                           ),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              CreateCstmr().addCustomer();
+                              context.read<CreateCstmr>().addCustomer();
                               CreateCstmr().clearingControllers();
                               Navigator.pop(context);
-                              print(CreateCstmr.customer);
+                              print('${context.read<CreateCstmr>().customer}');
                               log(
-                                'customers.lenght: ${CreateCstmr.customer.length}',
+                                '${context.read<CreateCstmr>().customer.length}',
                               );
-                              rebuildState();
-                         }
+                            }
                           },
                           child: Text(
                             'Save',
