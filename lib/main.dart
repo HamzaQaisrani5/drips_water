@@ -1,20 +1,22 @@
 import 'package:drips_water/core/colors.dart';
 import 'package:drips_water/core/asset_address.dart';
 import 'package:drips_water/logic/create_cstmr.dart';
+import 'package:drips_water/logic/data_base.dart';
 import 'package:drips_water/ui/screens/dashboard.dart';
-// import 'package:drips_water/ui/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_)=> CreateCstmr())
-    ],
-    child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => CreateCstmr())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -29,6 +31,14 @@ class _MyAppState extends State<MyApp> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(AssetImage(Addresses.bowlWater), context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    myDatabase.dbref = FirebaseDatabase.instance.ref();
+    myDatabase.readDbOneChild();
+    myDatabase.createdb();
   }
 
   @override
@@ -63,7 +73,7 @@ class _MyAppState extends State<MyApp> {
           bodyMedium: TextStyle(
             fontSize: 14,
             fontFamily: Addresses.appFontFamily,
-            color: Colors.black45
+            color: Colors.black45,
           ),
           bodySmall: TextStyle(
             fontSize: 13,
@@ -117,6 +127,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
 // Registered emails
 //1) email: alinajoli65@gmail.com
 //pswrd: Alina@789

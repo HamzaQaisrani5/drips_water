@@ -2,6 +2,7 @@
 import 'package:drips_water/logic/auth.dart';
 import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/logic/data_base.dart';
 // import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
 // import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:drips_water/ui/screens/view_customer.dart';
@@ -18,17 +19,17 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final _formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    CreateCstmr().disposingControllers();
-    super.dispose();
-  }
+  // final _formKey = GlobalKey<FormState>();
+  // @override
+  // void dispose() {
+  //   CreateCstmr().disposingControllers();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /* appBar: AppBar(
         automaticallyImplyLeading: false,
         actionsPadding: EdgeInsets.only(right: 5),
         actions: [
@@ -92,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ],
-      ),
+      ), */
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -104,10 +105,44 @@ class _DashboardState extends State<Dashboard> {
               ).textTheme.displayLarge!.copyWith(color: AppColors.bgColor),
             ),
             SizedBox(height: 10),
-            Text(
-              '${context.watch<CreateCstmr>().customer.length}',
-              style: Theme.of(context).textTheme.displayLarge!,
+            Text('Age is: ${myDatabase.databaseJson}'),
+            Text('newAge is: ${myDatabase.ageOne}'),
+            Text('newAge is: ${myDatabase.ageTwo}'),
+            Text('Age is: ${myDatabase.status}'),
+            StreamBuilder(
+              stream: myDatabase.dbref.onValue,
+              builder: (context, AsyncSnapshot snap) {
+                if (snap.hasData &&
+                    !(snap.hasError) &&
+                    myDatabase.databaseJson != null) {
+                  Map data = snap.data;
+                  List item = [];
+                  data.forEach((index, data) {
+                    item.add({'key': index, ...data});
+                  });
+                  return Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text('Customer: ${item[index]['key']}'),
+                          subtitle: Text(
+                            'Age: ${item[index]['age'].toString()}\nStatus: ${item[index]['status']}',
+                          ),
+                          isThreeLine: true,
+                        );
+                      },
+                      itemCount: item.length,
+                    ),
+                  );
+                } else {
+                  return Center(child: Text('No data'));
+                }
+              },
             ),
+            // Text(
+            //   '${context.watch<CreateCstmr>().customer.length}',
+            //   style: Theme.of(context).textTheme.displayLarge!,
+            // ),
           ],
         ),
       ),
