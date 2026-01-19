@@ -1,33 +1,24 @@
 import 'dart:developer';
 
+import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class MyDatabase extends ChangeNotifier {
-  late DatabaseReference dbref;
-  String? status;
-  String? ageOne;
-  String? ageTwo;
-  String? databaseJson;
-
-  void createdb() {
-    dbref.child('Profile').set('Hamza');
-  }
-
-  void readDbOneChild() {
-    dbref.child('customer1').child('age').once().then((
-      DatabaseEvent databaseEvent,
-    ) {
-      final event = databaseEvent.snapshot;
-      databaseJson = event.value.toString();
-      log('read once${event.value}');
-      notifyListeners();
-    });
-  }
-
-  void updateValue() {
-    dbref.child('hamza').update({'Car': 'kla'});
+  final database = FirebaseDatabase.instance.ref();
+  void addToDatabase(BuildContext context, int index) async {
+    var infoTitle =
+        '${context.read<CreateCstmr>().customer[index]['customerId']}';
+    try {
+      await database
+          .child('Customers/')
+          .child(infoTitle)
+          .set(context.read<CreateCstmr>().customer[index]);
+      log('Data set successfully');
+    } catch (e) {
+      log('Exception caught: $e');
+    }
+    notifyListeners();
   }
 }
-
-MyDatabase myDatabase = MyDatabase();

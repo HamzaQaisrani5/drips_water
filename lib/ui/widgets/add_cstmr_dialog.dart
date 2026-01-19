@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/logic/data_base.dart';
 import 'package:drips_water/ui/widgets/custom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -215,6 +216,7 @@ class AddCustomerDialog extends ChangeNotifier {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               context.read<CreateCstmr>().addCustomer();
+                              context.read<MyDatabase>().addToDatabase(context, context.read<CreateCstmr>().customer.length-1);
                               CreateCstmr().clearingControllers();
                               Navigator.pop(context);
                               print('${context.read<CreateCstmr>().customer}');

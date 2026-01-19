@@ -13,7 +13,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => CreateCstmr())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => CreateCstmr()),
+        ChangeNotifierProvider(create: (_)=> MyDatabase())],
       child: const MyApp(),
     ),
   );
@@ -31,14 +33,6 @@ class _MyAppState extends State<MyApp> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(AssetImage(Addresses.bowlWater), context);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    myDatabase.dbref = FirebaseDatabase.instance.ref();
-    myDatabase.readDbOneChild();
-    myDatabase.createdb();
   }
 
   @override
