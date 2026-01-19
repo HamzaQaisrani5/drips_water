@@ -1,4 +1,6 @@
 // import 'dart:developer';
+import 'dart:developer';
+
 import 'package:drips_water/logic/auth.dart';
 import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:drips_water/core/colors.dart';
@@ -7,6 +9,8 @@ import 'package:drips_water/logic/data_base.dart';
 // import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:drips_water/ui/screens/view_customer.dart';
 import 'package:drips_water/ui/widgets/add_cstmr_dialog.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter/services.dart';
@@ -29,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
         actionsPadding: EdgeInsets.only(right: 5),
         actions: [
@@ -49,34 +53,46 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          TextButton(
-            onPressed: () {
-              AddCustomerDialog.addcustomerDialogue(
-                context,
-                formKey: _formKey,
-              );
-            },
-            style: TextButton.styleFrom(
-              minimumSize: Size(318 / 2, 51),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-            ),
-            child: Text(
-              'ADD CUSTOMER',
-              style: Theme.of(
-                context,
-              ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          // TextButton(
+          //   onPressed: () {
+          //     AddCustomerDialog.addcustomerDialogue(
+          //       context,
+          //       formKey: _formKey,
+          //     );
+          //   },
+          //   style: TextButton.styleFrom(
+          //     minimumSize: Size(318 / 2, 51),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(50),
+          //     ),
+          //   ),
+          //   child: Text(
+          //     'ADD CUSTOMER',
+          //     style: Theme.of(
+          //       context,
+          //     ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
+          //     textAlign: TextAlign.center,
+          //   ),
+          // ),
           SizedBox(height: 4.0),
           TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => ViewCustomer()),
-              );
+            onPressed: () async {
+              final database = FirebaseDatabase.instance.ref();
+              try {
+                await database.child('dailySpecial').update({
+                  'customer/name': 'Yahya'
+                });
+                // await database.child('non special').update({
+                //   'price': .99,
+                // });
+                log('Special data inserted sucksexfully');
+              } catch (e) {
+                log('Exception caught: $e');
+              }
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (_) => ViewCustomer()),
+              // );
             },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
@@ -85,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             child: Text(
-              'VIEW CUSTOMER',
+              'Simple set',
               style: Theme.of(
                 context,
               ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
@@ -93,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ],
-      ), 
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
