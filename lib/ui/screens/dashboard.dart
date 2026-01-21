@@ -1,5 +1,6 @@
 // import 'dart:developer';
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:drips_water/logic/auth.dart';
 import 'package:drips_water/logic/create_cstmr.dart';
@@ -80,14 +81,14 @@ class _DashboardState extends State<Dashboard> {
               final database = FirebaseDatabase.instance.ref();
               try {
                 await database.child('dailySpecial').update({
-                  'customer/name': 'Yahya'
+                  'customer/name': 'Yahya',
                 });
                 // await database.child('non special').update({
                 //   'price': .99,
                 // });
-                log('Special data inserted sucksexfully');
+                print('Special data inserted sucksexfully');
               } catch (e) {
-                log('Exception caught: $e');
+                print('Exception caught: $e');
               }
               // Navigator.push(
               //   context,
@@ -107,6 +108,24 @@ class _DashboardState extends State<Dashboard> {
               ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final nextOrder = <String, dynamic>{
+                'description': myDatabase.getRandomDrinks(),
+                'price': Random().nextInt(800) / 100.0,
+                'customer': MyDatabase().getRandomName(),
+                'Time': DateTime.now().microsecondsSinceEpoch,
+              };
+              final database = FirebaseDatabase.instance.ref();
+              try {
+                await database.child('orders').set(nextOrder);
+                print('Append successful');
+              } catch (e) {
+                print('Exception caught $e');
+              }
+            },
+            child: Text('Append new order'),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -15,10 +16,38 @@ class MyDatabase extends ChangeNotifier {
           .child('Customers/')
           .child(infoTitle)
           .set(context.read<CreateCstmr>().customer[index]);
-      log('Data set successfully');
+      print('Data set successfully');
     } catch (e) {
-      log('Exception caught: $e');
+      print('Exception caught: $e');
     }
     notifyListeners();
   }
+
+  String getRandomDrinks() {
+    final drinkList = [
+      'Latte',
+      'Cuppacino',
+      'Machiatto',
+      'Cortado',
+      'Mocha',
+      'Drip Coffee',
+      'Cold Brew',
+    ];
+    return drinkList[Random().nextInt(drinkList.length)];
+  }
+
+  String getRandomName() {
+    final customerName = [
+      'Sam',
+      'Arthur',
+      'Jessica',
+      'Todd',
+      'Morgan',
+      'Sumit',
+      'David',
+    ];
+    return customerName[Random().nextInt(customerName.length)];
+  }
 }
+
+MyDatabase myDatabase = MyDatabase();
