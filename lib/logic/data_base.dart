@@ -50,4 +50,3 @@ class MyDatabase extends ChangeNotifier {
   }
 }
 
-MyDatabase myDatabase = MyDatabase();

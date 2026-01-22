@@ -112,14 +112,14 @@ class _DashboardState extends State<Dashboard> {
           ElevatedButton(
             onPressed: () async {
               final nextOrder = <String, dynamic>{
-                'description': myDatabase.getRandomDrinks(),
+                'description': MyDatabase().getRandomDrinks(),
                 'price': Random().nextInt(800) / 100.0,
                 'customer': MyDatabase().getRandomName(),
                 'Time': DateTime.now().microsecondsSinceEpoch,
               };
               final database = FirebaseDatabase.instance.ref();
               try {
-                await database.child('orders').set(nextOrder);
+                await database.child('orders').push().set(nextOrder);
                 print('Append successful');
               } catch (e) {
                 print('Exception caught $e');
