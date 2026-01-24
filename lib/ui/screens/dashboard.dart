@@ -6,8 +6,6 @@ import 'package:drips_water/logic/auth.dart';
 import 'package:drips_water/logic/create_cstmr.dart';
 import 'package:drips_water/core/colors.dart';
 import 'package:drips_water/logic/data_base.dart';
-// import 'package:drips_water/resources/components/cstmwidgets/customformfield/custom_formfield.dart';
-// import 'package:drips_water/resources/components/validationmodel/validations.dart';
 import 'package:drips_water/ui/screens/view_customer.dart';
 import 'package:drips_water/ui/widgets/add_cstmr_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +23,12 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    context.read<MyDatabase>().activateListeners();
+  }
+
   @override
   void dispose() {
     CreateCstmr().disposingControllers();
@@ -109,24 +113,9 @@ class _DashboardState extends State<Dashboard> {
               textAlign: TextAlign.center,
             ),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              final nextOrder = <String, dynamic>{
-                'description': MyDatabase().getRandomDrinks(),
-                'price': Random().nextInt(800) / 100.0,
-                'customer': MyDatabase().getRandomName(),
-                'Time': DateTime.now().microsecondsSinceEpoch,
-              };
-              final database = FirebaseDatabase.instance.ref();
-              try {
-                await database.child('orders').push().set(nextOrder);
-                print('Append successful');
-              } catch (e) {
-                print('Exception caught $e');
-              }
-            },
-            child: Text('Append new order'),
-          ),
+          ElevatedButton(onPressed: () {
+
+          }, child: Text('New Examples')),
         ],
       ),
       body: Center(
@@ -144,6 +133,7 @@ class _DashboardState extends State<Dashboard> {
               '${context.watch<CreateCstmr>().customer.length}',
               style: Theme.of(context).textTheme.displayLarge!,
             ),
+            Text(context.watch<MyDatabase>().displayNewDescription),
           ],
         ),
       ),
