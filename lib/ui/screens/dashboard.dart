@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    context.read<MyDatabase>().activateListeners();
+    // context.read<MyDatabase>().activateListeners();
   }
 
   @override
@@ -113,9 +113,16 @@ class _DashboardState extends State<Dashboard> {
               textAlign: TextAlign.center,
             ),
           ),
-          ElevatedButton(onPressed: () {
-
-          }, child: Text('New Examples')),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => Dashboard()),
+              );
+              context.read<MyDatabase>().activateListeners();
+            },
+            child: Text('New Examples'),
+          ),
         ],
       ),
       body: Center(

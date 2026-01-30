@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 // import 'dart:math';
 
@@ -52,9 +53,10 @@ class MyDatabase extends ChangeNotifier {
 
   String _displayNewDescription = 'not called';
   String get displayNewDescription => _displayNewDescription;
+  StreamSubscription? streamspecial;
   void activateListeners() {
     log('Method is Calling: ');
-    database.child('Customers').onValue.listen((event) {
+    streamspecial =  database.child('dailySpecial/description').onValue.listen((event) {
       _displayNewDescription = event.snapshot.value.toString();
       log('_displayNewDescription: $_displayNewDescription');
       notifyListeners();
