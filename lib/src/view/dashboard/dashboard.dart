@@ -2,12 +2,12 @@
 import 'dart:developer';
 import 'dart:math';
 
-import 'package:drips_water/logic/auth.dart';
-import 'package:drips_water/logic/create_cstmr.dart';
-import 'package:drips_water/core/colors.dart';
-import 'package:drips_water/logic/data_base.dart';
-import 'package:drips_water/ui/screens/view_customer.dart';
-import 'package:drips_water/ui/widgets/add_cstmr_dialog.dart';
+import 'package:drips_water/src/controller/auth/auth.dart';
+import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
+import 'package:drips_water/src/core/colors.dart';
+import 'package:drips_water/src/controller/fbrtdb/data_base.dart';
+import 'package:drips_water/src/view/viewcstmr/view_customer.dart';
+import 'package:drips_water/src/widgets/add_cstmr_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -58,46 +58,12 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // TextButton(
-          //   onPressed: () {
-          //     AddCustomerDialog.addcustomerDialogue(
-          //       context,
-          //       formKey: _formKey,
-          //     );
-          //   },
-          //   style: TextButton.styleFrom(
-          //     minimumSize: Size(318 / 2, 51),
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(50),
-          //     ),
-          //   ),
-          //   child: Text(
-          //     'ADD CUSTOMER',
-          //     style: Theme.of(
-          //       context,
-          //     ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
-          SizedBox(height: 4.0),
           TextButton(
-            onPressed: () async {
-              final database = FirebaseDatabase.instance.ref();
-              try {
-                await database.child('dailySpecial').update({
-                  'customer/name': 'Yahya',
-                });
-                // await database.child('non special').update({
-                //   'price': .99,
-                // });
-                print('Special data inserted sucksexfully');
-              } catch (e) {
-                print('Exception caught: $e');
-              }
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (_) => ViewCustomer()),
-              // );
+            onPressed: () {
+              AddCustomerDialog.addcustomerDialogue(
+                context,
+                formKey: _formKey,
+              );
             },
             style: TextButton.styleFrom(
               minimumSize: Size(318 / 2, 51),
@@ -106,13 +72,47 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             child: Text(
-              'Simple set',
+              'ADD CUSTOMER',
               style: Theme.of(
                 context,
               ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),
+          SizedBox(height: 4.0),
+          // TextButton(
+          //   onPressed: () async {
+          //     final database = FirebaseDatabase.instance.ref();
+          //     try {
+          //       await database.child('dailySpecial').update({
+          //         'customer/name': 'Yahya',
+          //       });
+          //       // await database.child('non special').update({
+          //       //   'price': .99,
+          //       // });
+          //       print('Special data inserted succussfully');
+          //     } catch (e) {
+          //       print('Exception caught: $e');
+          //     }
+          //     // Navigator.push(
+          //     //   context,
+          //     //   MaterialPageRoute(builder: (_) => ViewCustomer()),
+          //     // );
+          //   },
+          //   style: TextButton.styleFrom(
+          //     minimumSize: Size(318 / 2, 51),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(50),
+          //     ),
+          //   ),
+          //   child: Text(
+          //     'Simple set',
+          //     style: Theme.of(
+          //       context,
+          //     ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
+          //     textAlign: TextAlign.center,
+          //   ),
+          // ),
           ElevatedButton(
             onPressed: () {
               Navigator.push(

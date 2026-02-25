@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:drips_water/ui/screens/check_point.dart';
-import 'package:drips_water/ui/screens/dashboard.dart';
-import 'package:drips_water/ui/widgets/auth_snckbr.dart';
+import 'package:drips_water/src/view/checkpoint/check_point.dart';
+import 'package:drips_water/src/view/dashboard/dashboard.dart';
+import 'package:drips_water/src/widgets/auth_snckbr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

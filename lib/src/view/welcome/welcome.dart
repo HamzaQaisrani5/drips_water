@@ -1,7 +1,7 @@
-import 'package:drips_water/core/colors.dart';
-import 'package:drips_water/core/asset_address.dart';
-import 'package:drips_water/ui/screens/login.dart';
-import 'package:drips_water/ui/screens/sign_up_view.dart';
+import 'package:drips_water/src/core/colors.dart';
+import 'package:drips_water/src/core/asset_address.dart';
+import 'package:drips_water/src/view/login/login.dart';
+import 'package:drips_water/src/view/signup/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:drips_water/core/colors.dart';
-import 'package:drips_water/core/asset_address.dart';
-import 'package:drips_water/logic/create_cstmr.dart';
-import 'package:drips_water/logic/data_base.dart';
-import 'package:drips_water/ui/screens/dashboard.dart';
+import 'package:drips_water/src/core/colors.dart';
+import 'package:drips_water/src/core/asset_address.dart';
+import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
+import 'package:drips_water/src/controller/fbrtdb/data_base.dart';
+import 'package:drips_water/src/view/dashboard/dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';

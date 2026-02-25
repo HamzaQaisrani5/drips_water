@@ -1,5 +1,5 @@
-import 'package:drips_water/logic/create_cstmr.dart';
-import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
+import 'package:drips_water/src/core/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-import 'package:drips_water/core/colors.dart';
+import 'package:drips_water/src/core/colors.dart';
 import 'package:flutter/material.dart ';
 import 'package:flutter/services.dart';
 

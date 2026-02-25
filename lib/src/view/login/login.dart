@@ -1,9 +1,9 @@
 
-import 'package:drips_water/logic/auth.dart';
-import 'package:drips_water/core/colors.dart';
-import 'package:drips_water/ui/widgets/custom_formfield.dart';
-import 'package:drips_water/logic/validations.dart';
-import 'package:drips_water/ui/screens/sign_up_view.dart';
+import 'package:drips_water/src/controller/auth/auth.dart';
+import 'package:drips_water/src/core/colors.dart';
+import 'package:drips_water/src/widgets/custom_formfield.dart';
+import 'package:drips_water/src/validations/validations.dart';
+import 'package:drips_water/src/view/signup/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
