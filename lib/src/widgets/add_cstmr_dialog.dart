@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:drips_water/src/core/colors.dart';
 import 'package:drips_water/src/services/add_customer_service/add_customer_data.dart';
@@ -228,9 +229,9 @@ class AddCustomerDialog extends ChangeNotifier {
                             overlayColor: Colors.black12,
                             backgroundColor: Colors.transparent,
                           ),
-                          onPressed: ()async {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                            await  context.read<MyDatabase>().addToDatabase(
+                              await context.read<MyDatabase>().addToDatabase(
                                 context: context,
                                 name: nameController.text.trim(),
                                 address: addressController.text.trim(),
@@ -240,7 +241,9 @@ class AddCustomerDialog extends ChangeNotifier {
                                 eachCanePrice:
                                     eachCanePriceController.text.trim(),
                               );
-                             await context.read<RetrieveCstmrData>().fetchCustomer();
+                              await context
+                                  .read<RetrieveCstmrData>()
+                                  .fetchCustomer();
                               clearingControllers(
                                 name: nameController,
                                 address: addressController,
@@ -278,28 +281,30 @@ class AddCustomerDialog extends ChangeNotifier {
     required TextEditingController customerIdController,
   }) async {
     String signature = 'DW417';
-    final dbInstance = FirebaseDatabase.instance.ref();
+    final DatabaseReference dbInstance = FirebaseDatabase.instance.ref();
+    Map? wholeDb;
     try {
-      var future = await dbInstance.child('Customers/').get();
-      if (!future.exists || future == null) {
+      DatabaseReference customers = dbInstance.child('Customers/');
+      customers.onValue.listen((data) {
+        wholeDb = data.snapshot.value as Map?;
+        log('Whole Db: $wholeDb');
+        if (wholeDb==null || wholeDb!.isEmpty) {
+        // when there is no customer
         customerIdController.text = '${signature}1';
-        log('Customer Id generated successfully ${customerIdController.text}');
-        return;
-      }
-      // log('future ${future.value}');
-      final rawData = Map<String, dynamic>.from(future.value as Map);
-      final extractKeysList = rawData.keys.toList();
-      if (extractKeysList.isEmpty) {
-        customerIdController.text =
-            signature + (extractKeysList.length + 1).toString();
-        log('Customer Id generated successfully ${customerIdController.text}');
-      } else {
-        extractKeysList.sort();
-        var split = extractKeysList.last.toString().split('DW417');
-        customerIdController.text =
-            signature + (int.parse(split[split.length - 1]) + 1).toString();
-        log('Customer Id generated successfully ${customerIdController.text}');
-      }
+        log('Customer Id generated: ${customerIdController.text}');
+        } else{
+          final lastKey = wholeDb!.keys.last;
+          log('lastKey: $lastKey');
+          final split = lastKey.split('DW417'); //[ , <last number>]
+          final extractLastSplitted = int.parse(
+            split[split.length - 1],
+          ); // last number
+          customerIdController.text =
+              signature +
+              (extractLastSplitted + 1).toString(); //DW417(last number + 1)
+          log('Customer Id generated: ${customerIdController.text}');
+        }
+      });
     } catch (e) {
       log('Exception Caught while generating customer ID $e');
     }

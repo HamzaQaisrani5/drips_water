@@ -6,7 +6,6 @@ import 'package:drips_water/src/services/firebase_messaging.dart';
 import 'package:drips_water/src/services/local_notifications_service.dart';
 import 'package:drips_water/src/services/retrieve_cstmr_data/retrieve_cstmr_data.dart';
 import 'package:drips_water/src/view/dashboard/dashboard.dart';
-import 'package:drips_water/src/view/viewcstmr/view_customer.dart';
 import 'package:drips_water/src/widgets/add_cstmr_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: ViewCustomer(),
+      home: Dashboard(),
     );
   }
 }
