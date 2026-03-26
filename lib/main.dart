@@ -1,21 +1,41 @@
+import 'package:drips_water/firebase_options.dart';
 import 'package:drips_water/src/core/colors.dart';
 import 'package:drips_water/src/core/asset_address.dart';
-import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
-import 'package:drips_water/src/controller/fbrtdb/data_base.dart';
+import 'package:drips_water/src/services/add_customer_service/add_customer_data.dart';
+import 'package:drips_water/src/services/firebase_messaging.dart';
+import 'package:drips_water/src/services/local_notifications_service.dart';
+import 'package:drips_water/src/services/retrieve_cstmr_data/retrieve_cstmr_data.dart';
 import 'package:drips_water/src/view/dashboard/dashboard.dart';
+import 'package:drips_water/src/view/viewcstmr/view_customer.dart';
+import 'package:drips_water/src/widgets/add_cstmr_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // final localNotificationsService = LocalNotificationsService.instance();
+  // await localNotificationsService.init();
+  // final FirebaseMessagingService firebaseMessaging =
+  //     FirebaseMessagingService.instance();
+  // await firebaseMessaging.init(localNotificationsService: localNotificationsService);
+  LocalNotificationsService _localNotificationService =
+      LocalNotificationsService.instance();
+  await _localNotificationService.initialize();
+
+  FirebaseMessagingService _firebaseMessagingService =
+      FirebaseMessagingService.instance();
+  await _firebaseMessagingService.permissionRequestAndGetToken();
+  await _firebaseMessagingService.notificationModes();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CreateCstmr()),
-        ChangeNotifierProvider(create: (_)=> MyDatabase())],
+        ChangeNotifierProvider(create: (_) => AddCustomerDialog()),
+        ChangeNotifierProvider(create: (_) => MyDatabase()),
+        ChangeNotifierProvider(create: (_) => RetrieveCstmrData()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -117,7 +137,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: Dashboard(),
+      home: ViewCustomer(),
     );
   }
 }
@@ -135,3 +155,11 @@ class _MyAppState extends State<MyApp> {
 // pswrd:Qaisrani78@
 // 6) haamim@gmail.com
 // pswrd: Haamim1@    ya Haamim@1
+
+// @pragma('vm: entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   log(
+//     'background(terminated) message received ${message.notification!.body.toString()}',
+//   );
+// }

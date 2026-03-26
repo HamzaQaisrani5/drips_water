@@ -1,18 +1,27 @@
 import 'dart:developer';
-import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
 import 'package:drips_water/src/core/colors.dart';
-import 'package:drips_water/src/controller/fbrtdb/data_base.dart';
+import 'package:drips_water/src/services/add_customer_service/add_customer_data.dart';
+import 'package:drips_water/src/services/retrieve_cstmr_data/retrieve_cstmr_data.dart';
 import 'package:drips_water/src/widgets/custom_formfield.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddCustomerDialog extends ChangeNotifier {
-  static Future<void> addcustomerDialogue(
+  Future<void> addcustomerDialogue(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
+    required TextEditingController nameController,
+    required TextEditingController addressController,
+    required TextEditingController phoneNoController,
+    required TextEditingController perDayCaneController,
+    required TextEditingController customerIdController,
+    required TextEditingController eachCanePriceController,
   }) async {
     // listen CreateCstmr.createCustomerId()
-    context.read<CreateCstmr>().createCustomerId();
+    await context.read<AddCustomerDialog>().createCustomerId(
+      customerIdController: customerIdController,
+    );
     await showDialog(
       context: context,
       builder:
@@ -65,7 +74,7 @@ class AddCustomerDialog extends ChangeNotifier {
                               }
                               return null;
                             },
-                            controller: CreateCstmr.name,
+                            controller: nameController,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -87,7 +96,7 @@ class AddCustomerDialog extends ChangeNotifier {
                               }
                               return null;
                             },
-                            controller: CreateCstmr.address,
+                            controller: addressController,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -117,7 +126,7 @@ class AddCustomerDialog extends ChangeNotifier {
                               }
                               return null;
                             },
-                            controller: CreateCstmr.phone,
+                            controller: phoneNoController,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -140,7 +149,7 @@ class AddCustomerDialog extends ChangeNotifier {
                               }
                               return null;
                             },
-                            controller: CreateCstmr.perdayCane,
+                            controller: perDayCaneController,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -155,7 +164,7 @@ class AddCustomerDialog extends ChangeNotifier {
                           SizedBox(height: 2),
                           // Customer Id
                           CustomFormField(
-                            controller: context.watch<CreateCstmr>().customerId,
+                            controller: customerIdController,
                             readOnly: true,
                           ),
                           SizedBox(height: 20),
@@ -179,7 +188,7 @@ class AddCustomerDialog extends ChangeNotifier {
                               }
                               return null;
                             },
-                            controller: CreateCstmr.eachCanePrice,
+                            controller: eachCanePriceController,
                           ),
                         ],
                       ),
@@ -197,7 +206,13 @@ class AddCustomerDialog extends ChangeNotifier {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            CreateCstmr().clearingControllers();
+                            clearingControllers(
+                              name: nameController,
+                              address: addressController,
+                              phone: phoneNoController,
+                              perdayCane: perDayCaneController,
+                              eachCanePrice: eachCanePriceController,
+                            );
                           },
                           child: Text(
                             'Cancel',
@@ -213,17 +228,35 @@ class AddCustomerDialog extends ChangeNotifier {
                             overlayColor: Colors.black12,
                             backgroundColor: Colors.transparent,
                           ),
-                          onPressed: () {
+                          onPressed: ()async {
                             if (formKey.currentState!.validate()) {
-                              context.read<CreateCstmr>().addCustomer();
-                              context.read<MyDatabase>().addToDatabase(context, context.read<CreateCstmr>().customer.length-1);
-                              CreateCstmr().clearingControllers();
-                              Navigator.pop(context);
-                              print('${context.read<CreateCstmr>().customer}');
-                              log(
-                                '${context.read<CreateCstmr>().customer.length}',
+                            await  context.read<MyDatabase>().addToDatabase(
+                                context: context,
+                                name: nameController.text.trim(),
+                                address: addressController.text.trim(),
+                                phoneNo: phoneNoController.text.trim(),
+                                perDayCane: perDayCaneController.text.trim(),
+                                customerId: customerIdController.text.trim(),
+                                eachCanePrice:
+                                    eachCanePriceController.text.trim(),
                               );
+                             await context.read<RetrieveCstmrData>().fetchCustomer();
+                              clearingControllers(
+                                name: nameController,
+                                address: addressController,
+                                phone: phoneNoController,
+                                perdayCane: perDayCaneController,
+                                eachCanePrice: eachCanePriceController,
+                              );
+                              Navigator.pop(context);
                             }
+                            // FirebaseDatabase.instance
+                            //     .ref()
+                            //     .child('Customers/')
+                            //     .onValue
+                            //     .listen((data) {
+                            //       log('Database: ${data.snapshot.value}');
+                            //     });
                           },
                           child: Text(
                             'Save',
@@ -239,5 +272,70 @@ class AddCustomerDialog extends ChangeNotifier {
             ),
           ),
     );
+  }
+
+  Future<void> createCustomerId({
+    required TextEditingController customerIdController,
+  }) async {
+    String signature = 'DW417';
+    final dbInstance = FirebaseDatabase.instance.ref();
+    try {
+      var future = await dbInstance.child('Customers/').get();
+      if (!future.exists || future == null) {
+        customerIdController.text = '${signature}1';
+        log('Customer Id generated successfully ${customerIdController.text}');
+        return;
+      }
+      // log('future ${future.value}');
+      final rawData = Map<String, dynamic>.from(future.value as Map);
+      final extractKeysList = rawData.keys.toList();
+      if (extractKeysList.isEmpty) {
+        customerIdController.text =
+            signature + (extractKeysList.length + 1).toString();
+        log('Customer Id generated successfully ${customerIdController.text}');
+      } else {
+        extractKeysList.sort();
+        var split = extractKeysList.last.toString().split('DW417');
+        customerIdController.text =
+            signature + (int.parse(split[split.length - 1]) + 1).toString();
+        log('Customer Id generated successfully ${customerIdController.text}');
+      }
+    } catch (e) {
+      log('Exception Caught while generating customer ID $e');
+    }
+    notifyListeners();
+  }
+
+  void addCustomer({
+    required TextEditingController? nameController,
+    required TextEditingController? addressController,
+    required TextEditingController? phoneNoController,
+    required TextEditingController? perDayCaneController,
+    required TextEditingController? customerIdController,
+    required TextEditingController? eachCanePriceController,
+  }) {
+    // customer.add({
+    //   'name': nameController!.text.trim(),
+    //   'address': addressController!.text.trim(),
+    //   'phone': phoneNoController!.text.trim(),
+    //   'perDayCane': perDayCaneController!.text.trim(),
+    //   'customerId': customerIdController!.text,
+    //   'eachCanePrice': eachCanePriceController!.text.trim(),
+    // });
+    notifyListeners();
+  }
+
+  void clearingControllers({
+    required TextEditingController name,
+    required TextEditingController address,
+    required TextEditingController phone,
+    required TextEditingController perdayCane,
+    required TextEditingController eachCanePrice,
+  }) {
+    name.clear();
+    address.clear();
+    phone.clear();
+    perdayCane.clear();
+    eachCanePrice.clear();
   }
 }

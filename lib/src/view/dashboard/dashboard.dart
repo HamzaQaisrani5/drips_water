@@ -1,18 +1,14 @@
 // import 'dart:developer';
-import 'dart:developer';
-import 'dart:math';
+// import 'dart:developer';
+// import 'dart:math';
 
 import 'package:drips_water/src/controller/auth/auth.dart';
-import 'package:drips_water/src/controller/createcstmr/create_cstmr.dart';
 import 'package:drips_water/src/core/colors.dart';
-import 'package:drips_water/src/controller/fbrtdb/data_base.dart';
+import 'package:drips_water/src/services/retrieve_cstmr_data/retrieve_cstmr_data.dart';
 import 'package:drips_water/src/view/viewcstmr/view_customer.dart';
 import 'package:drips_water/src/widgets/add_cstmr_dialog.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter/services.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -23,15 +19,27 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController name = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController perdayCane = TextEditingController();
+  TextEditingController eachCanePrice = TextEditingController();
+  TextEditingController customerId = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    // context.read<MyDatabase>().activateListeners();
+    context.read<RetrieveCstmrData>().fetchCustomer();
   }
 
   @override
   void dispose() {
-    CreateCstmr().disposingControllers();
+    name.dispose();
+    address.dispose();
+    phone.dispose();
+    perdayCane.dispose();
+    customerId.dispose();
+    eachCanePrice.dispose();
     super.dispose();
   }
 
@@ -60,9 +68,15 @@ class _DashboardState extends State<Dashboard> {
         children: [
           TextButton(
             onPressed: () {
-              AddCustomerDialog.addcustomerDialogue(
+              context.read<AddCustomerDialog>().addcustomerDialogue(
                 context,
                 formKey: _formKey,
+                nameController: name,
+                addressController: address,
+                phoneNoController: phone,
+                perDayCaneController: perdayCane,
+                customerIdController: customerId,
+                eachCanePriceController: eachCanePrice,
               );
             },
             style: TextButton.styleFrom(
@@ -80,48 +94,26 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           SizedBox(height: 4.0),
-          // TextButton(
-          //   onPressed: () async {
-          //     final database = FirebaseDatabase.instance.ref();
-          //     try {
-          //       await database.child('dailySpecial').update({
-          //         'customer/name': 'Yahya',
-          //       });
-          //       // await database.child('non special').update({
-          //       //   'price': .99,
-          //       // });
-          //       print('Special data inserted succussfully');
-          //     } catch (e) {
-          //       print('Exception caught: $e');
-          //     }
-          //     // Navigator.push(
-          //     //   context,
-          //     //   MaterialPageRoute(builder: (_) => ViewCustomer()),
-          //     // );
-          //   },
-          //   style: TextButton.styleFrom(
-          //     minimumSize: Size(318 / 2, 51),
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(50),
-          //     ),
-          //   ),
-          //   child: Text(
-          //     'Simple set',
-          //     style: Theme.of(
-          //       context,
-          //     ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
-          ElevatedButton(
+          TextButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => Dashboard()),
+                MaterialPageRoute(builder: (_) => ViewCustomer()),
               );
-              context.read<MyDatabase>().activateListeners();
             },
-            child: Text('New Examples'),
+            style: TextButton.styleFrom(
+              minimumSize: Size(318 / 2, 51),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+            child: Text(
+              'VIEW CUSTOMER',
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -137,10 +129,9 @@ class _DashboardState extends State<Dashboard> {
             ),
             SizedBox(height: 10),
             Text(
-              '${context.watch<CreateCstmr>().customer.length}',
+              '${context.watch<RetrieveCstmrData>().customerData.length}',
               style: Theme.of(context).textTheme.displayLarge!,
             ),
-            Text(context.watch<MyDatabase>().displayNewDescription),
           ],
         ),
       ),

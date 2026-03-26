@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class AuthSnackbar {
-   void customSnackbar({
+   void customSnackbar(
+    {
     required BuildContext context,
     required String message,
   }) {
+
     log('calling snackbar');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
