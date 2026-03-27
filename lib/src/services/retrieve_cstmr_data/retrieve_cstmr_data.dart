@@ -12,6 +12,12 @@ class RetrieveCstmrData extends ChangeNotifier {
     final dbCustomersRaw =
         await FirebaseDatabase.instance.ref('Customers/').get();
     final customers = dbCustomersRaw.value as Map?;
-    log('customers: $customers');
+    log('fetch customers called: $customers');
+    for (final eachInfo in customers!.entries) {
+      final eachValue = Map<String, dynamic>.from(eachInfo.value as Map);
+      customerData.add(CustomerModel.fromJson(eachValue));
+      log(customerData[0].name!);
+    }
+    notifyListeners();
   }
 }

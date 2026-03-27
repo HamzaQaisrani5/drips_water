@@ -1,6 +1,4 @@
-// import 'dart:developer';
-// import 'dart:developer';
-// import 'dart:math';
+import 'dart:developer';
 
 import 'package:drips_water/src/controller/auth/auth.dart';
 import 'package:drips_water/src/core/colors.dart';
@@ -30,6 +28,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     context.read<RetrieveCstmrData>().fetchCustomer();
+    log(context.read<RetrieveCstmrData>().customerData.length.toString());
   }
 
   @override

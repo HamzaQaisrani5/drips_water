@@ -15,7 +15,7 @@ class CustomerModel {
     required this.eachCanePrice,
   });
 
-  factory CustomerModel.fromJson(Map<String, dynamic> e, String id) {
+  factory CustomerModel.fromJson(Map<dynamic, dynamic> e,{ String? id}) {
     return CustomerModel(
       name: e['name'],
       address: e['address'],

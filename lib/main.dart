@@ -11,14 +11,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> main() async {
+// initialization application
+Future<void> _initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // final localNotificationsService = LocalNotificationsService.instance();
-  // await localNotificationsService.init();
-  // final FirebaseMessagingService firebaseMessaging =
-  //     FirebaseMessagingService.instance();
-  // await firebaseMessaging.init(localNotificationsService: localNotificationsService);
+
   LocalNotificationsService _localNotificationService =
       LocalNotificationsService.instance();
   await _localNotificationService.initialize();
@@ -27,6 +24,17 @@ Future<void> main() async {
       FirebaseMessagingService.instance();
   await _firebaseMessagingService.permissionRequestAndGetToken();
   await _firebaseMessagingService.notificationModes();
+}
+
+// fetch customers data from database
+Future<void> _fetchCustomers() async {
+  final RetrieveCstmrData _retrieveCustomerData = RetrieveCstmrData();
+  await _retrieveCustomerData.fetchCustomer();
+}
+
+Future<void> main() async {
+  await _initializeApp();
+  await _fetchCustomers();
 
   runApp(
     MultiProvider(

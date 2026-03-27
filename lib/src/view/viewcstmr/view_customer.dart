@@ -15,15 +15,6 @@ class _ViewCustomerState extends State<ViewCustomer> {
   final database = FirebaseDatabase.instance.ref();
 
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      // ignore: use_build_context_synchronously
-      context.read<RetrieveCstmrData>().fetchCustomer();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,22 +24,23 @@ class _ViewCustomerState extends State<ViewCustomer> {
       ),
       body: Consumer<RetrieveCstmrData>(
         builder: (_, retrieveCstmrData, child) {
-          return retrieveCstmrData.customerData.isEmpty
-              ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 10),
-                  Text(
-                    'No Customers',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium!.copyWith(color: Colors.black),
-                  ),
-                ],
-              )
-              : Consumer<RetrieveCstmrData>(
-                builder: (context, value, child) {
-                  return ListView.separated(
+          child =
+              retrieveCstmrData.customerData.isEmpty
+                  ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                    children: [
+                      SizedBox(height: 10),
+                      Text(
+                        'No Customers',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+                      ),
+                    ],
+                  )
+                  : ListView.separated(
                     padding: EdgeInsets.all(8.0),
                     separatorBuilder: (_, index) => SizedBox(height: 5),
                     scrollDirection: Axis.vertical,
@@ -65,57 +57,94 @@ class _ViewCustomerState extends State<ViewCustomer> {
                                   .read<RetrieveCstmrData>()
                                   .customerData[index]
                                   .name ??
-                              '',
+                              'N/A',
                         ),
                         tileColor: AppColors.bgColor,
-                        // subtitle: ,
                       );
                     },
                   );
-                },
-                // context.read<RetrieveCstmrData>().customerData.isEmpty
-                //     ? Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         SizedBox(height: 10),
-                //         Text(
-                //           'No Customers',
-                //           style: Theme.of(
-                //             context,
-                //           ).textTheme.bodyMedium!.copyWith(color: Colors.black),
-                //         ),
-                //       ],
-                //     )
-                //     : Consumer<RetrieveCstmrData>(
-                //       builder: (context, value, child) {
-                //         return ListView.separated(
-                //           padding: EdgeInsets.all(8.0),
-                //           separatorBuilder: (_, index) => SizedBox(height: 5),
-                //           scrollDirection: Axis.vertical,
-                //           itemCount:
-                //               context.read<RetrieveCstmrData>().customerData.length,
-                //           itemBuilder: (_, index) {
-                //             return ListTile(
-                //               leading: CircleAvatar(
-                //                 backgroundColor: AppColors.whitetxtColor,
-                //                 child: Text('${index + 1}'),
-                //               ),
-                //               title: Text(
-                //                 context
-                //                         .read<RetrieveCstmrData>()
-                //                         .customerData[index]
-                //                         .name ??
-                //                     '',
-                //               ),
-                //               tileColor: AppColors.bgColor,
-                //               // subtitle: ,
-                //             );
-                //           },
-                //         );
-                //       },
-                //     ),
-              );
+          return child;
+          // retrieveCstmrData.customerData.isEmpty
+          //           ? Column(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+
+          //             children: [
+          //               SizedBox(height: 10),
+          //               Text(
+          //                 'No Customers',
+          //                 style: Theme.of(
+          //                   context,
+          //                 ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+          //               ),
+          //             ],
+          //           )
+          //           : ListView.separated(
+          //             padding: EdgeInsets.all(8.0),
+          //             separatorBuilder: (_, index) => SizedBox(height: 5),
+          //             scrollDirection: Axis.vertical,
+          //             itemCount:
+          //                 context.read<RetrieveCstmrData>().customerData.length,
+          //             itemBuilder: (_, index) {
+          //               return ListTile(
+          //                 leading: CircleAvatar(
+          //                   backgroundColor: AppColors.whitetxtColor,
+          //                   child: Text('${index + 1}'),
+          //                 ),
+          //                 title: Text(
+          //                   context
+          //                           .read<RetrieveCstmrData>()
+          //                           .customerData[index]
+          //                           .name ??
+          //                       '',
+          //                 ),
+          //                 tileColor: AppColors.bgColor,
+          //                 // subtitle: ,
+          //               );
+          //             },
+          //           );
         },
+
+        // context.read<RetrieveCstmrData>().customerData.isEmpty
+        //     ? Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         SizedBox(height: 10),
+        //         Text(
+        //           'No Customers',
+        //           style: Theme.of(
+        //             context,
+        //           ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+        //         ),
+        //       ],
+        //     )
+        //     : Consumer<RetrieveCstmrData>(
+        //       builder: (context, value, child) {
+        //         return ListView.separated(
+        //           padding: EdgeInsets.all(8.0),
+        //           separatorBuilder: (_, index) => SizedBox(height: 5),
+        //           scrollDirection: Axis.vertical,
+        //           itemCount:
+        //               context.read<RetrieveCstmrData>().customerData.length,
+        //           itemBuilder: (_, index) {
+        //             return ListTile(
+        //               leading: CircleAvatar(
+        //                 backgroundColor: AppColors.whitetxtColor,
+        //                 child: Text('${index + 1}'),
+        //               ),
+        //               title: Text(
+        //                 context
+        //                         .read<RetrieveCstmrData>()
+        //                         .customerData[index]
+        //                         .name ??
+        //                     '',
+        //               ),
+        //               tileColor: AppColors.bgColor,
+        //               // subtitle: ,
+        //             );
+        //           },
+        //         );
+        //       },
       ),
     );
   }

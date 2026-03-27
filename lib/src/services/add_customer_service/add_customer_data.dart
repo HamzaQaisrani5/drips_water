@@ -28,6 +28,7 @@ class MyDatabase extends ChangeNotifier {
     if (infoTitle != null) {
       try {
         await database.child('Customers/').child(infoTitle).set(customerInfo);
+        
         log('*** Data Stored to dB ***');
       } catch (e) {
         log('Exception caught when storing data to dB: $e');
