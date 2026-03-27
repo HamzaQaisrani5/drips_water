@@ -16,7 +16,6 @@ class MyDatabase extends ChangeNotifier {
     required String? customerId,
     required String? eachCanePrice,
   }) async {
-    
     var customerInfo = {
       'name': name,
       'address': address,
@@ -28,10 +27,7 @@ class MyDatabase extends ChangeNotifier {
     var infoTitle = customerInfo['customerId'];
     if (infoTitle != null) {
       try {
-        await database
-            .child('Customers/')
-            .child(infoTitle)
-            .set(customerInfo /*context.read<AddCustomerDialog>().customer[index]*/);
+        await database.child('Customers/').child(infoTitle).set(customerInfo);
         log('*** Data Stored to dB ***');
       } catch (e) {
         log('Exception caught when storing data to dB: $e');

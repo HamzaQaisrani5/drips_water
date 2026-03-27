@@ -23,6 +23,8 @@ class AddCustomerDialog extends ChangeNotifier {
     await context.read<AddCustomerDialog>().createCustomerId(
       customerIdController: customerIdController,
     );
+    final dbCustomers =
+        await FirebaseDatabase.instance.ref().child('Customers/').get();
     await showDialog(
       context: context,
       builder:
@@ -252,6 +254,7 @@ class AddCustomerDialog extends ChangeNotifier {
                                 eachCanePrice: eachCanePriceController,
                               );
                               Navigator.pop(context);
+                              log('dbCustomers: ${dbCustomers.value}');
                             }
                             // FirebaseDatabase.instance
                             //     .ref()
@@ -287,12 +290,11 @@ class AddCustomerDialog extends ChangeNotifier {
       DatabaseReference customers = dbInstance.child('Customers/');
       customers.onValue.listen((data) {
         wholeDb = data.snapshot.value as Map?;
-        log('Whole Db: $wholeDb');
-        if (wholeDb==null || wholeDb!.isEmpty) {
-        // when there is no customer
-        customerIdController.text = '${signature}1';
-        log('Customer Id generated: ${customerIdController.text}');
-        } else{
+        if (wholeDb == null || wholeDb!.isEmpty) {
+          // when there is no customer
+          customerIdController.text = '${signature}1';
+          log('Customer Id generated: ${customerIdController.text}');
+        } else {
           final lastKey = wholeDb!.keys.last;
           log('lastKey: $lastKey');
           final split = lastKey.split('DW417'); //[ , <last number>]

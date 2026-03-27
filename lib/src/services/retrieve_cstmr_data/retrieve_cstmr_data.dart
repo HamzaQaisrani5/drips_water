@@ -8,18 +8,10 @@ class RetrieveCstmrData extends ChangeNotifier {
   List<CustomerModel> customerData = [];
 
   Future<void> fetchCustomer() async {
-    // final snapshot = await FirebaseDatabase.instance.ref('Customers/').get();
-    // if (!snapshot.exists) return;
-    // final rawData = Map<String, dynamic>.from(snapshot.value as Map);
-    // customerData.clear();
-    // rawData.forEach((key, value) {
-    //   var customerModel = CustomerModel.fromJson(
-    //     Map<String, dynamic>.from(value),
-    //     key,
-    //   );
-    //   customerData.add(customerModel);
-    // });
-    // log('customerData: $customerData');
-    // notifyListeners();
+    //  fbrtdb instance
+    final dbCustomersRaw =
+        await FirebaseDatabase.instance.ref('Customers/').get();
+    final customers = dbCustomersRaw.value as Map?;
+    log('customers: $customers');
   }
 }
