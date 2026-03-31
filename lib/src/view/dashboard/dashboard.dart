@@ -23,12 +23,15 @@ class _DashboardState extends State<Dashboard> {
   TextEditingController perdayCane = TextEditingController();
   TextEditingController eachCanePrice = TextEditingController();
   TextEditingController customerId = TextEditingController();
+  late final provider = context.read<RetrieveCstmrData>();
 
   @override
   void initState() {
     super.initState();
-    context.read<RetrieveCstmrData>().fetchCustomer();
-    log(context.read<RetrieveCstmrData>().customerData.length.toString());
+    Future.microtask(() async {
+      // ignore: use_build_context_synchronously
+      await context.read<RetrieveCstmrData>().fetchCustomer();
+    });
   }
 
   @override
@@ -127,10 +130,10 @@ class _DashboardState extends State<Dashboard> {
               ).textTheme.displayLarge!.copyWith(color: AppColors.bgColor),
             ),
             SizedBox(height: 10),
-            Text(
-              '${context.watch<RetrieveCstmrData>().customerData.length}',
-              style: Theme.of(context).textTheme.displayLarge!,
-            ),
+              Text(
+                '${context.watch<RetrieveCstmrData>().customerData.length}',
+                style: Theme.of(context).textTheme.displayLarge!,
+              )
           ],
         ),
       ),

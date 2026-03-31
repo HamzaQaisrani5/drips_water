@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class AddCustomerDialog extends ChangeNotifier {
   Future<void> addcustomerDialogue(
     BuildContext context, {
-    required GlobalKey<FormState> formKey,
+     GlobalKey<FormState>? formKey,
     required TextEditingController nameController,
     required TextEditingController addressController,
     required TextEditingController phoneNoController,
@@ -232,7 +232,7 @@ class AddCustomerDialog extends ChangeNotifier {
                             backgroundColor: Colors.transparent,
                           ),
                           onPressed: () async {
-                            if (formKey.currentState!.validate()) {
+                            if (formKey!.currentState!.validate()) {
                               await context.read<MyDatabase>().addToDatabase(
                                 context: context,
                                 name: nameController.text.trim(),

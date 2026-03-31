@@ -6,6 +6,7 @@ import 'package:drips_water/src/services/firebase_messaging.dart';
 import 'package:drips_water/src/services/local_notifications_service.dart';
 import 'package:drips_water/src/services/retrieve_cstmr_data/retrieve_cstmr_data.dart';
 import 'package:drips_water/src/view/dashboard/dashboard.dart';
+import 'package:drips_water/src/view/viewcstmr/view_customer.dart';
 import 'package:drips_water/src/widgets/add_cstmr_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +27,8 @@ Future<void> _initializeApp() async {
   await _firebaseMessagingService.notificationModes();
 }
 
-// fetch customers data from database
-Future<void> _fetchCustomers() async {
-  final RetrieveCstmrData _retrieveCustomerData = RetrieveCstmrData();
-  await _retrieveCustomerData.fetchCustomer();
-}
-
 Future<void> main() async {
   await _initializeApp();
-  await _fetchCustomers();
 
   runApp(
     MultiProvider(
@@ -162,11 +156,3 @@ class _MyAppState extends State<MyApp> {
 // pswrd:Qaisrani78@
 // 6) haamim@gmail.com
 // pswrd: Haamim1@    ya Haamim@1
-
-// @pragma('vm: entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-//   log(
-//     'background(terminated) message received ${message.notification!.body.toString()}',
-//   );
-// }
